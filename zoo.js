@@ -102,7 +102,7 @@ var Zoo = {
 		//hopefully.
 		console.log("Here are your current pens...");
 		for (var i = 0; i < this.pens.length; i++){
-			console.log((i+1)+") "}this.pens[i].type);
+			console.log((i+1)+") "+this.pens[i].type);
 		}
 		var choice = parseInt(sget("Select the pen you would like to work with: ").trim());
 
@@ -125,9 +125,6 @@ var Pen = function(type, animals){
 
 	}
 }
-
-
-
 
 var lion1 = new Animal('Bob', 'Lion', 'large', 'male');
 var lion2 = new Animal('Bill', 'Lion', 'large', 'male');
