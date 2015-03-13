@@ -72,7 +72,7 @@ function ZooProgram() {
 		//this.zoosection = template.zoosection;
 	}
 
-	function Pen() {
+	function Pen(name) {
 		this.name = name;
 		this.animals=[];
 		this.add = function(animal) {
@@ -94,10 +94,23 @@ function ZooProgram() {
 		}
 		var animal = new Animal(template);
 		allAnimals.push(animal);
+		checkPen(animal);
 		//create Pen if it doesn't already exist for this animal. Make it a separate function(s)
 	}
+	function checkPen(animal){
+		for (var i=0; i<allPens.length; i++) {
+			if(allPens[i].name===animal.name && allPens[i].animals.length > 0){
+				allPens[i].add(animal);
+			}else {
+				var createdPen = new Pen(animal.name);
+				createdPen.add(animal);
 
+			}
+		}
+	}
+	
 	function removeAnimal() {
+		
 
 
 		//remove Pen if this was the last animal. Make it a separate function(s)
