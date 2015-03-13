@@ -11,7 +11,7 @@ var Zoo = {
 	
 	pens: [],
 
-	zooMenu: ["Build a new pen for your animals.","Demolish a pen.","Relocate an animal to a new pen.","Remove an animal from a pen.","Check out zoo inventory.", "Check out a specific pen."]
+	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Relocate an animal to a new pen.","Remove an animal from a pen.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
 
 	addPen: function(){
 
@@ -47,8 +47,12 @@ var Zoo = {
 	},
 
 	zooMenu: function(){
+		console.log("\nHere are your choices:\n");
 		
-		console.log("\nHere are your choices:\n1) Create a new pen for your animals.\n2) Remove a pen from the zoo.\n3) Add an animal to a pen.\n4) Remove an animal from a pen.\n5) Display all zoo animals.\n6) Display animals in a specific pen.\n7) Exit the Zoo for the day.");
+		for (i=0;i<zooMenu.length;i++){
+			console.log(i+") "+this.zooMenuChoices[i]+"\n");
+		}
+		
 		var input = this.handleInput();
 		switch (input) {
 			case "1":
