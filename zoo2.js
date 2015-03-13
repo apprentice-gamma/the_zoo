@@ -1,58 +1,63 @@
-var words = require('./word-count');
+function Animal(name, species, size, gender) {
+	this.name = name;
+	this.species = species;
+	this.size = size;
+	this.gender = gender;
+	this.viewAnimal = function() {
+		console.log(this.species + " is the species of the animal." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".")
+	}
+}
 
-describe("words()", function() {
-  it("counts one word", function() {
-    var expectedCounts = { word: 1 };
-    expect(words("word")).toEqual(expectedCounts);
-  });
+function Pen(name) {
+	this.animalArray = [];
+	this.name = name;
+	this.addAnimal = function(animal) {
+		this.animalArray.push(animal);
+	};
+	this.viewPen = function() {
+		console.log(this.name + "has these animals: " + this.animalArray.forEach(function(animal){
+			animal.viewAnimal();
+		}));
+	};
+	this.deleteAnimal = function(animalName) {
+		var index = this.animalArray.forEach(function(animal, index) {
+			if (animal.name === animalName) {
+				return index;
+			} 
+		});
+		if (index === undefined) {
+			console.log("Please enter valid animal.");
+			arguments.callee();
+		} else {
+			this.animalArray.splice(index, 1);
+		}
+	}
 
-  xit("counts one of each", function() {
-    var expectedCounts = { one: 1, of: 1, each: 1 };
-    expect(words("one of each")).toEqual(expectedCounts);
-  });
+}
 
-  xit("counts multiple occurrences", function() {
-    var expectedCounts = { one: 1, fish: 4, two: 1, red: 1, blue: 1 };
-    expect(words("one fish two fish red fish blue fish")).toEqual(expectedCounts);
-  });
-
-  xit("includes punctuation", function() {
-    var expectedCounts = { car: 1, ":": 2, carpet: 1, as: 1, java: 1, "javascript!!&@$%^&": 1 };
-    expect(words("car : carpet as java : javascript!!&@$%^&")).toEqual(expectedCounts);
-  });
-
-  xit("includes numbers", function() {
-    var expectedCounts = { testing: 2, 1: 1, 2: 1 };
-    expect(words("testing 1 2 testing")).toEqual(expectedCounts);
-  });
-
-  xit("respects case", function() {
-    var expectedCounts = { go: 1, Go:1, GO:1 };
-    expect(words("go Go GO")).toEqual(expectedCounts);
-  });
-
-  xit("counts properly international characters", function() {
-    var expectedCounts = { "¡Hola!": 1, "¿Qué": 1, "tal?": 1, "Привет!": 1 };
-    expect(words("¡Hola! ¿Qué tal? Привет!")).toEqual(expectedCounts);
-  });
-
-  xit("counts multiline", function() {
-    var expectedCounts = { hello: 1, world: 1 };
-    expect(words("hello\nworld")).toEqual(expectedCounts);
-  });
-
-  xit("counts tabs", function() {
-    var expectedCounts = { hello: 1, world: 1 };
-    expect(words("hello\tworld")).toEqual(expectedCounts);
-  });
-
-  xit("counts multiple spaces as one", function() {
-    var expectedCounts = { hello: 1, world: 1 };
-    expect(words("hello  world")).toEqual(expectedCounts);
-  });
-
-  xit("handles properties that exist on Object’s prototype", function() {
-    var expectedCounts = { reserved: 1, words : 1, like :1,  prototype: 1, and : 1, toString: 1,  "ok?": 1};
-    expect(words("reserved words like prototype and toString ok?")).toEqual(expectedCounts);
-  });
-});
+function Zoo(name) {
+	this.name = name;
+	this.penArray = [];
+	this.addPen = function(pen) {
+		this.penArray.push(pen);
+	};
+	this.viewZoo = function() {
+		console.log(this.penArray.forEach(function(pen){
+			pen.viewPen();
+		}));
+	};
+	this.deletePen = function(penName) {
+		var index = this.penArray.forEach(function(pen, index) {
+			if (pen.name === penName) {
+				return index;
+			}
+		});
+		if (index === undefined) {
+			console.log("Please enter valid pen.");
+			arguments.callee();	
+		} else {
+			this.penArray.splice(index, 1);
+		}
+	
+	}
+}
