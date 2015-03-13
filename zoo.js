@@ -128,7 +128,7 @@ var Zoo = {
 				this.pens[choice].addAnimal();
 				break;
 			case 'add2':
-				this.pens[choice].addAnimal();
+				this.pens[choice].addAnimal(animal);
 				break;
 			case 'remove':
 				this.deletePen(choice);			
@@ -151,11 +151,11 @@ var Zoo = {
 			console.log((i+1)+") "+this.pens[pen].animals[i].name+" the "+this.pens[pen].animals[i].species+".");
 		}
 		console.log("Choose the animal to be relocated: ");
-		var choice = handleInput(this.pens[pen].animals.length);
+		var choice = this.handleInput(this.pens[pen].animals.length);
 
 		console.log("Choose the pen you would like to move "+this.pens[pen].animals[choice].name+" to.");
 
-		this.choosePen(add2);
+		this.choosePen('add2', choice);
 
 	}
 
