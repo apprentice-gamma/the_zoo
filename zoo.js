@@ -17,48 +17,54 @@ a. Your program should also allow the Zookeeper to add BabyAnimals to Pens. Baby
 b. Your program should not allow the zookeeper to add more than (4) total Animals or (10) total BabyAnimals to a Pen.
 c. Your program should not allow the zookeeper to add a BabyAnimal to a Pen unless you already have a male Animal and a female Animal living in the Pen.
 d. Your program should include Habitats, which should describe what a given Animal's habitat is like (desert, forest, hot, cold, etc.).*/
+var sget = require("sget");
+
 function ZooProgram() {
 	var allAnimals = [];
 	var allPens = [];
-	var lion = new Animal(var template = { name:"Leo", species:"feline", size:"Adult", gender:"male", habitat:"desert" });
-	var bear = new Animal(var template = { name:"Winnie the Pooh", species:"sloth bear", size:"Adult", gender:"male", habitat:"forest" });
+	var template = { name:"Leo", species:"feline", size:"Adult", gender:"male", habitat:"desert" };
+	var lion = new Animal(template);
+	template = { name:"Winnie the Pooh", species:"sloth bear", size:"Adult", gender:"male", habitat:"forest" };
+	var bear = new Animal(template);
 	allAnimals.push(lion);
 	allAnimals.push(bear);
 
 	enterZoo();	
 
 	function enterZoo() {
+		console.log("------------------");
 		console.log("Welcome to John & Nikki's Zoo!");
 
 		var quit = false;
 		while (!quit) {
-		displayMenu(menuOptions);
-		var selection = sget("What would you like to do?\n1.Create an animal\n2.Remove an animal from a pen\n3.Display all animals in a specific pen\n4.Display all animals in the zoo\n5.Leave Zoo").trim();
-		switch(selection){
-			case '1': 
-						clearScreen();
-					  newAnimal();
-					  break;
+			var selection = sget("What would you like to do?\n1.Create an animal\n2.Remove an animal from a pen\n3.Display all animals in a specific pen\n4.Display all animals in the zoo\n5.Leave Zoo").trim();
+			switch(selection){
+				case '1': 
+							clearScreen();
+						  newAnimal();
+						  break;
 
-			case '2': 
-						clearScreen();
-					  removeAnimal();
-					  break;
-			
-			case '3': 
-						clearScreen();
-					  displayPen();
-					  break;
+				case '2': 
+							clearScreen();
+						  removeAnimal();
+						  break;
+				
+				case '3': 
+							clearScreen();
+						  displayPen();
+						  break;
 
-			case '4': 
-						clearScreen();
-					  displayAll();
-					  break;
+				case '4': 
+							clearScreen();
+						  displayAll();
+						  break;
 
-			case '5': 
-						quit = true;
-					  break;
-			default: console.log("Invalid input!"); continue;
+				case '5': 
+							quit = true;
+						  break;
+				default: console.log("Invalid input!"); continue;
+			}
+			process.quit();
 		}
 	}
 	
@@ -86,7 +92,7 @@ function ZooProgram() {
 	//-----------------------------------------------------------
 	function newAnimal() {
 		var template = {};
-		var animalProperty =["What would you like to name your animal?", "What your animal's species?", "Is your animal a baby or an adult?", "Is your animal male or female?", "Where is your animal's habitat?"];
+		var animalProperty =["What would you like to name your animal?", "What your animal's species (i.e. be specific, lion vs. feline, wolf vs. canine)?", "Is your animal a baby or an adult?", "Is your animal male or female?", "Where is your animal's habitat?"];
 		var keys = ["name", "species", "size", "gender", "habitat"];
 		for (var i=0; i<animalProperty.length; i++) {
 			clearScreen();
@@ -138,21 +144,37 @@ function ZooProgram() {
 			console.log("An animal with that name was not found.");
 			removeAnimal();
 		}
+		//remove from allAnimal
 		enterZoo();
 		//remove Pen if this was the last animal. Make it a separate function(s)
 		//if errors, restart removeAnimal()
 	}
 
-	function searchAnimal(animal) {
-
-	}
-
 	function displayPen() {
-		//ask user for species. find pen. display
+		var selectedPen;
+		clearScreen();
+		console.log("Here is a list of your pens...");
+		for (var i=0; i<allPens.length; i++){
+			console.log("The " + allPens[i].name + " Pen");
+			selectedPen = allPens[i];
+		}
+		clearScreen();
+		var whichPen = sget("Which pen would you like to display?");
+		console.log("Here are the animals in the " + selectedPen.name + " Pen");
+		for (var g=0; g<selectedPen.animals.length; g++){
+			console.log("------------------");
+			console.log("Name: " + selectedPen.animals[g].name + "\n Size: "  + selectedPen.animals[g].size + "\n Gender: " + selectedPen.animals[g].gender);
+		}
+		enterZoo();
 	}
 
 	function displayAll() {
-
+		clearScreen();
+		for (var i=0; i<allAnimals.length; i++){
+			console.log("------------------");
+			console.log("Name: " + allAnimals[i].name +"\n Species: " + allAnimals[i].species + "\n Size: "  + allAnimals[i].size + "\n Gender: " + allAnimals[i].gender);
+		}
+		enterZoo();
 	}
 
 	function clearScreen() { process.stdout.write('\033c'); }
