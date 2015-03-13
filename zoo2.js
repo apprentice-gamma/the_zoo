@@ -108,24 +108,34 @@ var zooKeeper = {
 	},
 	getInput: function(saying) {
 		return sget(saying).trim();
+	},
+
+	closing: function() {
+		console.log("Good-Bye!")
 	},	
+
+	opening: function() {
+		this.createZoo();
+		this.menu();
+	}
+
 	menu: function() {
-		switch(getInput("What would you like to do in your zoo?")) {
+		switch(getInput("What would you like to do in your zoo? \n 1 - Create a new Pen \n 2 - Create a new animal \n 3 - Add your animal to a pen \n 4 - Remove animal from pen \n 5 - Delete a pen \n 6 - Quit the game")) {
 			case 1: 
 				this.createPen();
-				break;
+				arguments.callee();
 			case 2:
-				this.currentAnimal();
-				break;
+				this.createAnimal();
+				arguments.callee();
 			case 3:
-				this.putAnimalInPen();
-				break;
+				this.addAnimalInPen();
+				arguments.callee();
 			case 4:
 				this.removeAnimal();
-				break;
+				arguments.callee();
 			case 5:
 				this.currentZoo.deletePen();
-				break;
+				arguments.callee();
 			case 6:
 				this.closing();
 				break;
@@ -135,6 +145,7 @@ var zooKeeper = {
 		}		
 	}
 }
+
 
 
 
