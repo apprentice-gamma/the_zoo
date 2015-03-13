@@ -18,9 +18,16 @@ var Zoo = {
 	deletePen: function(){
 
 	},
-
+	//This method uses two for loops, the first to loop through the pens array, the other to loop through the animals array of
+	//each pen
 	displayZoo: function(){
-
+		console.log("These are the animals in the Zoo:")
+		for (var i = 0; i < this.pens.length; i++){
+			for (var j = 0; j < this.pens[i].animals.length; j++){
+		console.log(this.pens[i].animals[j].name, "the", this.pens[i].animals[j].species);
+			}
+		}
+		
 	},
 
 	handleInput: function(){
@@ -31,34 +38,67 @@ var Zoo = {
 		} else
 			return userInput;
 	},
+	//Added start menu so the welcome message won't come up while the program is cycling through.
+	startMenu: function(){
+		console.log("\nWelcome to the Zoo\n===========================\nYou are our new Zookeeper.");
+		this.zooMenu();
+	},
 
 	zooMenu: function(){
 		
-		console.log("Welcome to the Zoo\n===========================\nYou are our new Zookeeper\nHere are your choices:\n1) Create a new pen for your animals.\n2) Remove a pen from the zoo.\n3) Add an animal to a pen.\n4) Remove an animal from a pen.\n5) Display all zoo animals.\n6) Display animals in a specific pen.");
-		this.handleInput();
-	
-	},
+		console.log("\nHere are your choices:\n1) Create a new pen for your animals.\n2) Remove a pen from the zoo.\n3) Add an animal to a pen.\n4) Remove an animal from a pen.\n5) Display all zoo animals.\n6) Display animals in a specific pen.\n7) Exit the Zoo for the day.");
+		var input = this.handleInput();
+		switch (input) {
+			case "1":
+				this.addPen();
+				this.zooMenu();
+				break;
+			
+			case "2":
+				this.deletePen();
+				this.zooMenu();
+				break;
+			
+			case "3":
+				Pen.addAnimal();
+				this.zooMenu();
+				break;
+			
+			case "4":
+				Pen.removeAnimal();
+				this.zooMenu();
+				break;
+			
+			case "5":
+				this.displayZoo();
+				this.zooMenu();
+				break;
+			
+			case "6":
+				Pen.displayPen();
+				this.zooMenu();
+				break;
 
-	testing: function(){
-		console.log("ttttttttt");
-	}
+			case "7":
+				console.log("\nYou did a good job today. Tomorrow you'll have to work a little harder. \nGoodbye.")
+				break;
+			
+			default:
+		}
+
+	},
 
 } 
 
 var Pen = function(type, animals){
-
 	this.type = type;
-
 	this.animals = animals;
-
 	this.addAnimal = function(animal){
-
-	}
-
+		
+	};
 	this.removeAnimal = function(animal){
 
-	}
-
+	};
 	this.displayPen = function(){
 
 	}
@@ -67,7 +107,6 @@ var Pen = function(type, animals){
 
 
 
-var tempPen = new Pen("Animal Storage", [monkey, snake]);
 
 var lion1 = new Animal('Bob', 'Lion', 'large', 'male');
 var lion2 = new Animal('Bill', 'Lion', 'large', 'male');
@@ -75,10 +114,16 @@ var lion3 = new Animal('Fred', 'Lion', 'large', 'male');
 var monkey = new Animal('Sara', 'Monkey', 'medium', 'female');
 var snake = new Animal('Sam', 'Snake', 'small', 'male');
 
+
+var tempPen = new Pen();
+tempPen.type = "Animal Storage";
+tempPen.animals = [monkey, snake];
+Zoo.pens.push(tempPen);
 var lionPen = new Pen("Lion's Den",[lion1, lion2, lion3]);
+Zoo.pens.push(lionPen);
 
 // var zoo = new Zoo();
 
 console.log(lionPen);
 
-Zoo.zooMenu();
+Zoo.startMenu();
