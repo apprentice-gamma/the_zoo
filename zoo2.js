@@ -1,39 +1,53 @@
+var readline = require('readline');
+var prompt = readline.createInterface({input: process.stdin, output: process.stdout});
+
 function Animal(name, species, size, gender) {
 	this.name = name;
 	this.species = species;
 	this.size = size;
 	this.gender = gender;
 	this.viewAnimal = function() {
-		console.log(this.species + " is the species of the animal." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".")
+		return console.log(this.species + " is the species of the animal." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".");
 	}
 }
 
+// var panda = new Animal("bamboo bond", "panda", "large", "male");
+// panda.viewAnimal();
+
 function Pen(name) {
-	this.animalArray = [];
 	this.name = name;
+	this.animalArray = [];
 	this.addAnimal = function(animal) {
 		this.animalArray.push(animal);
 	};
 	this.viewPen = function() {
-		console.log(this.name + "has these animals: " + this.animalArray.forEach(function(animal){
+		console.log("In " + this.name + " is: ");
+		this.animalArray.forEach(function(animal){
 			animal.viewAnimal();
-		}));
+		});
 	};
 	this.deleteAnimal = function(animalName) {
-		var index = this.animalArray.forEach(function(animal, index) {
+		var animalIndex = false;
+		this.animalArray.forEach(function(animal, index) {
 			if (animal.name === animalName) {
-				return index;
+				return animalIndex = index;
 			} 
 		});
-		if (index === undefined) {
+		if (animalIndex === false) {
 			console.log("Please enter valid animal.");
-			arguments.callee();
 		} else {
-			this.animalArray.splice(index, 1);
+			this.animalArray.splice(animalIndex, 1);
 		}
 	}
 
 }
+
+// var pandaPen = new Pen("Panda Pen");
+// pandaPen.addAnimal("1234");
+// pandaPen.addAnimal(panda);
+// pandaPen.viewPen();
+// pandaPen.deleteAnimal("bamboo bond");
+// pandaPen.viewPen();
 
 function Zoo(name) {
 	this.name = name;
@@ -42,22 +56,42 @@ function Zoo(name) {
 		this.penArray.push(pen);
 	};
 	this.viewZoo = function() {
-		console.log(this.penArray.forEach(function(pen){
+		console.log("In " + this.name + " is these Animals:");
+		this.penArray.forEach(function(pen){
 			pen.viewPen();
-		}));
+		});
 	};
-	this.deletePen = function(penName) {
-		var index = this.penArray.forEach(function(pen, index) {
+	this.findPen = function(penName) {
+		var foundPen = false;
+		this.penArray.forEach(function(pen) {
 			if (pen.name === penName) {
-				return index;
+				return foundPen = pen;
 			}
 		});
-		if (index === undefined) {
+		return foundPen;
+	}
+	this.deletePen = function(penName) {
+		var penIndex = this.penArray.indexOf(this.findPen(penName));
+		if (penIndex === -1) {
 			console.log("Please enter valid pen.");
-			arguments.callee();	
 		} else {
-			this.penArray.splice(index, 1);
+			this.penArray.splice(penIndex, 1);
 		}
 	
 	}
 }
+
+// var happyZoo = new Zoo("Happy's Zoo");
+// happyZoo.addPen(pandaPen);
+// happyZoo.viewZoo();
+// happyZoo.deletePen("Panda Pen");
+// happyZoo.viewZoo();
+var zooKeeper = {
+	createZoo: function() { 
+		prompt.question('What would you like to call your zoo? ', function(input){
+			this[currentZoo] = new Zoo(input);
+		});
+	}
+
+}
+
