@@ -11,6 +11,8 @@ var Zoo = {
 	
 	pens: [],
 
+	zooMenu: ["Build a new pen for your animals.","Demolish a pen.","Relocate an animal to a new pen.","Remove an animal from a pen.","Check out zoo inventory.", "Check out a specific pen."]
+
 	addPen: function(){
 
 	},
