@@ -11,18 +11,24 @@ function Zoo() {
   this.pens = [];
   this.addAnimal = function(animal) {
     this.freeRangeAnimals.push(animal);
-  }
+  };
   this.addPen = function(pen) {
     this.pens.push(pen);
     // console.log("test in Zoo: " + pen.name);
     // console.log("test in Zoo this.pens: " + this.pens);
-  }
-  this.removePen = function(penName) {
+  };
+  this.listPens = function() {
   	for (var i = 0; i < this.pens.length; i++) {
   		console.log(this.pens[i].name);
-  	};
-
-  }
+  	}
+  };
+  this.removePen = function(penName) {
+  	for (var i = 0; i < this.pens.length; i++) {
+  		if (this.pens[i].name === penName) {
+   			this.pens.splice(i, 1);
+  		}
+  	}
+  };
 }
 
 function Pen(name) {
@@ -42,6 +48,12 @@ function getInput(userPrompt) {
 
 var zoo = new Zoo();
 var zooKeeping = true;
+
+// Temp test data
+zoo.addPen(new Pen("doghouse"));
+zoo.addPen(new Pen("monkey house"));
+zoo.addPen(new Pen("zebra house"));
+
 
 console.log("Welcome to the zoo!");
 
@@ -64,12 +76,12 @@ while (zooKeeping) {
 
 	  case '2':
 	    zoo.addPen(new Pen(getInput("Enter name of pen:")));
-	    // console.log("Test pens in switch: " + zoo.pens[0].name);
 	    break;
 
 	  case '3':
-	  	zoo.removePen();
-	    break;
+	  	zoo.listPens();
+	  	zoo.removePen(getInput("Type the name of the pen you would like to remove:"));
+	  	break;
 
 	  case '4':
 	    break;
