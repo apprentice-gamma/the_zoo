@@ -32,20 +32,21 @@ function Pen(){
 function Zoo(){
 	this.animals = [];
 	this.pens = [];
-	this.createAnimal = function(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?")) {
+	this.createAnimal = function (species, size, gender){
 		console.log("Adding new animal...");
 		this.animals.push(new Animal(species, size, gender));
 		console.log("Added " + animals[-1]);
-	}
-	this.removeAnimal(){};
-	this.addPen(){};
-	this.removePen(){};
-	this.addAnimalToPen(){};
-	this.removeAnimalFromPen(){};
-	this.displayAnimalsInPen(){};
-	this.displayAnimalsInZoo(){};
-}
+	};  //  use this to call funciton later   this.createAnimal(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?"));
+	
 
+	this.removeAnimal = function (){};
+	this.addPen = function (){};
+	this.removePen = function (){};
+	this.addAnimalToPen = function(){};
+	this.removeAnimalFromPen = function(){};
+	this.displayAnimalsInPen = function(){};
+	this.displayAnimalsInZoo = function(){};
+};
 
 var DLZoo = new Zoo();
 //Initialize the Zoo with a few animals
