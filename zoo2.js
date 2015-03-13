@@ -76,7 +76,7 @@ function Zoo(name) {
 			}
 		});
 		return foundPen;
-	}
+	};
 	this.deletePen = function(penName) {
 		var penIndex = this.penArray.indexOf(this.findPen(penName));
 		if (penIndex === -1) {
@@ -84,7 +84,20 @@ function Zoo(name) {
 		} else {
 			this.penArray.splice(penIndex, 1);
 		}
-	
+	};
+	this.addAnimalInPen = function(animalName, penName) {
+		var foundAnimal = false;
+		this.holdingPen.forEach(function(animal) {
+			if (animal.name === animalName) {
+				return foundAnimal = animal;
+			}  
+		});
+		var foundPen = this.findPen(penName); 
+		if (foundAnimal === false || foundPen === false) {
+			console.log("Please enter a valid entry.");
+		} else {
+			foundPen.push(foundAnimal);
+		}
 	}
 }
 
@@ -135,19 +148,19 @@ var zooKeeper = {
 				this.createAnimal();
 				this.menu();
 			case '3':
-				this.addAnimalInPen();
+				this.currentZoo.addAnimalInPen(this.getInput("Please give me name of animal you would like to put in a pen:"), this.getInput("Please give me name of pen you would like to place animal in:"));
 				this.menu();
 			case '4':
 				this.removeAnimalFromPen();
 				this.menu();
 			case '5':
-				this.currentZoo.deletePen(getInput("Please give name of Pen you would like to delete:"));
+				this.currentZoo.deletePen(this.getInput("Please give name of Pen you would like to delete:"));
 				this.menu();
 			case '6':
 				this.currentZoo.viewZoo();
 				this.menu();
 			case '7':
-				this.currentZoo.viewPen(getInput("Please give name of Pen you would like to view:"));
+				this.currentZoo.viewPen(this.getInput("Please give name of Pen you would like to view:"));
 			case '8':
 				this.closing();
 				break;
