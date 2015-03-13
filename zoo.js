@@ -11,7 +11,7 @@ var Zoo = {
 	
 	pens: [],
 
-	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Relocate an animal to a new pen.","Remove an animal from a pen.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
+	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Order a new animal.","Relocate an animal.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
 
 	addPen: function(){
 
@@ -61,17 +61,17 @@ var Zoo = {
 				break;
 			
 			case "2":
-				this.deletePen();
+				this.choosePen(remove);
 				this.zooMenu();
 				break;
 			
 			case "3":
-				Pen.addAnimal();
+				this.addAnimal();
 				this.zooMenu();
 				break;
 			
 			case "4":
-				Pen.removeAnimal();
+				this.choosePen(relocate);
 				this.zooMenu();
 				break;
 			
@@ -81,7 +81,7 @@ var Zoo = {
 				break;
 			
 			case "6":
-				Pen.displayPen();
+				this.choosePen(show);
 				this.zooMenu();
 				break;
 
@@ -93,6 +93,13 @@ var Zoo = {
 		}
 
 	},
+
+	choosePen: function(action){
+		//this will allow the user to select the pen they want to interact with.
+		//since Pen needs to have an instance for us to call a method, this should solve
+		//errors that were coming up when calling Pen.addAnimal and such...
+		//hopefully.
+	}
 
 } 
 
@@ -108,7 +115,6 @@ var Pen = function(type, animals){
 	this.displayPen = function(){
 
 	}
-
 }
 
 
