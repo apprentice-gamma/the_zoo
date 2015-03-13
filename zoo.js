@@ -71,7 +71,7 @@ function ZooProgram() {
 		this.habitat = template.habitat;
 		//this.zoosection = template.zoosection;
 	}
-
+	
 	function Pen(name) {
 		this.penName = name;
 		this.animals=[];
