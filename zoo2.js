@@ -60,6 +60,13 @@ function Zoo(name) {
 		this.penArray.forEach(function(pen){
 			pen.viewPen();
 		});
+		this.holdingPen.forEach(function(animal){
+			animal.viewAnimal();
+		});
+	};
+	this.viewPen = function(penName) {
+		var currentPen = this.findPen(penName);
+		currentPen.viewPen();
 	};
 	this.findPen = function(penName) {
 		var foundPen = false;
@@ -89,14 +96,14 @@ function Zoo(name) {
 var zooKeeper = {
 	createZoo: function() { 
 		var input = this.getInput('What would you like to call your zoo?');
-		this[currentZoo] = new Zoo(input);
+		this.currentZoo = new Zoo(input);
 	},
 	createPen: function() {
 		var input = this.getInput('What would you like to call your pen?');
 			var currentPen = new Pen(input);
-			this.currentZoo.push(currentPen);
+			this.currentZoo.addPen(currentPen);
 	},
-	createAnimal: function( {
+	createAnimal: function() {
 		var animalName = this.getInput('What would you like to call your animal?');
 		var animalSpecies = this.getInput('What species is your animal?');
 		var animalSize = this.getInput('What size is your animal?');
@@ -107,7 +114,7 @@ var zooKeeper = {
 		this.currentZoo.holdingPen.push(currentAnimal);
 	},
 	getInput: function(saying) {
-		return sget(saying).trim();
+		return sget(saying).trim().toUpperCase();
 	},
 
 	closing: function() {
@@ -117,35 +124,41 @@ var zooKeeper = {
 	opening: function() {
 		this.createZoo();
 		this.menu();
-	}
+	},
 
 	menu: function() {
-		switch(getInput("What would you like to do in your zoo? \n 1 - Create a new Pen \n 2 - Create a new animal \n 3 - Add your animal to a pen \n 4 - Remove animal from pen \n 5 - Delete a pen \n 6 - Quit the game")) {
-			case 1: 
+		switch(this.getInput("What would you like to do in your zoo? \n 1 - Create a new Pen \n 2 - Create a new animal \n 3 - Add your animal to a pen \n 4 - Remove animal from pen \n 5 - Delete a pen \n 8 - Quit the game")) {
+			case '1': 
 				this.createPen();
-				arguments.callee();
-			case 2:
+				this.menu();
+			case '2':
 				this.createAnimal();
-				arguments.callee();
-			case 3:
+				this.menu();
+			case '3':
 				this.addAnimalInPen();
-				arguments.callee();
-			case 4:
-				this.removeAnimal();
-				arguments.callee();
-			case 5:
-				this.currentZoo.deletePen();
-				arguments.callee();
-			case 6:
+				this.menu();
+			case '4':
+				this.removeAnimalFromPen();
+				this.menu();
+			case '5':
+				this.currentZoo.deletePen(getInput("Please give name of Pen you would like to delete:"));
+				this.menu();
+			case '6':
+				this.currentZoo.viewZoo();
+				this.menu();
+			case '7':
+				this.currentZoo.viewPen(getInput("Please give name of Pen you would like to view:"));
+			case '8':
 				this.closing();
 				break;
 			default:
 				console.log("Enter in a valid entry");
-				arguments.callee();
+				this.menu();
 		}		
 	}
 }
 
+zooKeeper.opening();
 
 
 
