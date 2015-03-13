@@ -103,6 +103,8 @@ var zooKeeper = {
 		var animalGender = this.getInput('What gender is your animal?');
 		var currentAnimal = new Animal(animalName, animalSpecies, animalSize, animalGender);
 		//
+		console.log("This " + currentAnimal.name + " is waiting for a new pen in the holding pen.");
+		this.currentZoo.holdingPen.push(currentAnimal);
 	},
 	getInput: function(saying) {
 		return sget(saying).trim();
