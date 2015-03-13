@@ -14,7 +14,7 @@ var Zoo = {
 	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Order a new animal.","Relocate an animal.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
 
 	addPen: function(){
-		var newPenType = sget("What would you like to call the new pen? ");
+		var newPenType = sget("What would you like to call the new pen? ").trim();
 		this.pens.push(new Pen(newPenType, []));
 		console.log("Your builders construct a new pen, called "+newPenType);
 		this.zooMenu();
@@ -72,16 +72,19 @@ var Zoo = {
 				break;
 			
 			case "2":
+				console.log("Which pen would you like to demolish?")
 				this.choosePen('remove');
 				this.zooMenu();
 				break;
 			
 			case "3":
-				this.addAnimal();
+				console.log("Which pen would you like to add an animal to?")
+				this.choosePen('add');
 				this.zooMenu();
 				break;
 			
 			case "4":
+				console.log("Which pen would you like to remove an animal from?")
 				this.choosePen('relocate');
 				this.zooMenu();
 				break;
@@ -121,6 +124,9 @@ var Zoo = {
 		choice--; //so it matches up with the array's index values.
 
 		switch(action){
+			case 'add':
+				this.pens[choice].addAnimal();
+				break;
 			case 'remove':
 				this.deletePen(choice);			
 				break;
@@ -144,8 +150,14 @@ var Pen = function(type, animals){
 	this.type = type;
 	this.animals = animals;
 	this.addAnimal = function(animal){
-		
+		var name = sget("What would you like to name your animal?").trim();
+		var species = sget("What kind of animal is it?").trim();
+		var size = sget("Is the animal large, medium, or small in size?").trim();
+		var gender = sget("Is the animal male or female?").trim();
+
+		this.animals.push(new Animal(name, species, size, gender));
 	};
+	
 	this.removeAnimal = function(animal){
 
 	};
