@@ -1,5 +1,4 @@
-var readline = require('readline');
-var prompt = readline.createInterface({input: process.stdin, output: process.stdout});
+var sget = require('sget');
 
 function Animal(name, species, size, gender) {
 	this.name = name;
@@ -51,6 +50,7 @@ function Pen(name) {
 
 function Zoo(name) {
 	this.name = name;
+	this.holdingPen = [];
 	this.penArray = [];
 	this.addPen = function(pen) {
 		this.penArray.push(pen);
@@ -88,19 +88,25 @@ function Zoo(name) {
 // happyZoo.viewZoo();
 var zooKeeper = {
 	createZoo: function() { 
-		prompt.question('What would you like to call your zoo? ', function(input){
-			this[currentZoo] = new Zoo(input);
-			//put in a function to create pen
-		});
-	}
+		var input = this.getInput('What would you like to call your zoo?');
+		this[currentZoo] = new Zoo(input);
+	},
 	createPen: function() {
-		prompt.question('What would you like to call your pen?', function(input) {
+		var input = this.getInput('What would you like to call your pen?');
 			var currentPen = new Pen(input);
 			this.currentZoo.push(currentPen);
-			//
-		});
+	},
+	createAnimal: function( {
+		var animalName = this.getInput('What would you like to call your animal?');
+		var animalSpecies = this.getInput('What species is your animal?');
+		var animalSize = this.getInput('What size is your animal?');
+		var animalGender = this.getInput('What gender is your animal?');
+		var currentAnimal = new Animal(animalName, animalSpecies, animalSize, animalGender);
+		//
+	},
+	getInput: function(saying) {
+		return sget(saying).trim();
 	}
-	
 	//NEED TO MAKE HOLDING PEN FOR ANIMALS that defaults the animals to go there	
 }
 
