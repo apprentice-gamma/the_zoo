@@ -22,12 +22,13 @@ var Zoo = {
 
 	deletePen: function(choice){
 		console.log("Are you sure you want to demolish the pen "+this.pens[choice].type+"?\nThis decision cannot be reversed and all animals inside will be crushed!");
+		console.log("After the console log.")
 		var decision = sget("y/n:").toLowerCase().trim();
 		if (decision === "y")
-			this.pens.splice(choice, 1, "The ruins of "+this.pens[choice].type);
+			this.pens.splice(choice, 1);
 			else
 			console.log("You decide to keep the pen around... for now.");
-		zooMenu();
+		this.zooMenu();
 	},
 	//This method uses two for loops, the first to loop through the pens array, the other to loop through the animals array of
 	//each pen
@@ -42,11 +43,11 @@ var Zoo = {
 		
 	},
 
-	handleInput: function(){
+	handleInput: function(upperBound){
 		var userInput = sget("Please enter your choice: ").trim();
-		if (isNaN(userInput)){
+		if (isNaN(userInput) || userInput<1 || userInput>upperBound){
 			console.log("Invalid selection, please try again.")
-			return this.handleInput();
+			return this.handleInput(upperBound);
 		} else
 			return userInput;
 	},
@@ -63,7 +64,7 @@ var Zoo = {
 			console.log((i+1)+") "+this.zooMenuChoices[i]+"\n");
 		}
 		
-		var input = this.handleInput();
+		var input = this.handleInput(this.zooMenuChoices.length);
 		switch (input) {
 			case "1":
 				this.addPen();
@@ -116,12 +117,12 @@ var Zoo = {
 			console.log((i+1)+") "+this.pens[i].type);
 		}
 		
-		var choice = parseInt(this.handleInput().trim());
+		var choice = parseInt(this.handleInput(this.pens.length).trim());
 		choice--; //so it matches up with the array's index values.
 
 		switch(action){
 			case 'remove':
-				this.deletePen(choice)
+				this.deletePen(choice);			
 				break;
 			case 'relocate':
 				this.pens[choice].removeAnimal();
@@ -135,16 +136,11 @@ var Zoo = {
 
 		}
 
-	},
-
-	deletePen: function(pen){
-
-	
 	}
-
 } 
 
 var Pen = function(type, animals){
+	
 	this.type = type;
 	this.animals = animals;
 	this.addAnimal = function(animal){
