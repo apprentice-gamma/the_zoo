@@ -100,6 +100,14 @@ var Zoo = {
 		//since Pen needs to have an instance for us to call a method, this should solve
 		//errors that were coming up when calling Pen.addAnimal and such...
 		//hopefully.
+		console.log("Here are your current pens...");
+		for (var i = 0; i < this.pens.length; i++){
+			console.log((i+1)+") "}this.pens[i].type);
+		}
+		var choice = parseInt(sget("Select the pen you would like to work with: ").trim());
+
+		choice--; //so it matches up with the array's index values.
+
 	}
 
 } 
