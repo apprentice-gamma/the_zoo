@@ -110,7 +110,7 @@ var Zoo = {
 
 	},
 
-	choosePen: function(action){
+	choosePen: function(action, animal){
 		//this will allow the user to select the pen they want to interact with.
 		//since Pen needs to have an instance for us to call a method, this should solve
 		//errors that were coming up when calling Pen.addAnimal and such...
@@ -127,22 +127,39 @@ var Zoo = {
 			case 'add':
 				this.pens[choice].addAnimal();
 				break;
+			case 'add2':
+				this.pens[choice].addAnimal();
+				break;
 			case 'remove':
 				this.deletePen(choice);			
 				break;
 			case 'relocate':
-				this.pens[choice].removeAnimal();
+				this.removeAnimal(choice);
 				break;
 			case 'show':
 				this.pens[choice].displayPen();
 				break;
 			default:
 				this.zooMenu();
-
-
 		}
 
+	},
+
+	removeAnimal: function(pen){
+		
+		for(i = 0;i<this.pens[pen].animals.length;i++){
+			console.log((i+1)+") "+this.pens[pen].animals[i].name+" the "+this.pens[pen].animals[i].species+".");
+		}
+		console.log("Choose the animal to be relocated: ");
+		var choice = handleInput(this.pens[pen].animals.length);
+
+		console.log("Choose the pen you would like to move "+this.pens[pen].animals[choice].name+" to.");
+
+		this.choosePen(add2);
+
 	}
+
+
 } 
 
 var Pen = function(type, animals){
@@ -150,17 +167,21 @@ var Pen = function(type, animals){
 	this.type = type;
 	this.animals = animals;
 	this.addAnimal = function(animal){
-		var name = sget("What would you like to name your animal?").trim();
-		var species = sget("What kind of animal is it?").trim();
-		var size = sget("Is the animal large, medium, or small in size?").trim();
-		var gender = sget("Is the animal male or female?").trim();
 
-		this.animals.push(new Animal(name, species, size, gender));
+		if (animal===undefined){
+			var name = sget("What would you like to name your animal?").trim();
+			var species = sget("What kind of animal is it?").trim();
+			var size = sget("Is the animal large, medium, or small in size?").trim();
+			var gender = sget("Is the animal male or female?").trim();
+			this.animals.push(new Animal(name, species, size, gender));
+		}
+		else {
+			this.animals.push(animal);
+		}
+
+		
 	};
 	
-	this.removeAnimal = function(animal){
-
-	};
 
 	this.displayPen = function(){
 		console.log("\nPen: "+this.type+"\n");
