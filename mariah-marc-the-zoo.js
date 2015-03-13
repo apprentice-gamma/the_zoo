@@ -14,29 +14,29 @@ var sget = require("sget");
 
 function getUserInput(message){
 	return sget(message).trim();
-}; 
+}
 
 function Animal(species, size, gender){
 	this.species = species;
 	this.size = size;
 	this.gender = gender;
-};
+}
 // Create a pen
 function Pen(){
 	this.habitat = habitat;
 	this.population = population;
 	this.momAndDad = momAndDad;
 	this.ocupant = occupant;
-};
+}
 // create a Zoo object with methods
 function Zoo(){
 	this.animals = [];
 	this.pens = [];
-	this.createAnimal(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?")){
+	this.createAnimal = function(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?")) {
 		console.log("Adding new animal...");
 		this.animals.push(new Animal(species, size, gender));
 		console.log("Added " + animals[-1]);
-	};
+	}
 	this.removeAnimal(){};
 	this.addPen(){};
 	this.removePen(){};
@@ -44,7 +44,7 @@ function Zoo(){
 	this.removeAnimalFromPen(){};
 	this.displayAnimalsInPen(){};
 	this.displayAnimalsInZoo(){};
-};
+}
 
 
 var DLZoo = new Zoo();
