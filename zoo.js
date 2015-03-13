@@ -155,7 +155,9 @@ var Zoo = {
 
 		console.log("Choose the pen you would like to move "+this.pens[pen].animals[choice].name+" to.");
 
-		this.choosePen('add2', choice);
+		this.choosePen('add2', this.pens[pen].animals[choice]);
+		this.pens[pen].animals.splice(choice,1);
+		console.log ("The animal has been moved.");
 
 	}
 
