@@ -10,8 +10,8 @@ function Animal(name, species, size, gender) {
 	}
 }
 
-// var panda = new Animal("bamboo bond", "panda", "large", "male");
-// panda.viewAnimal();
+ var panda = new Animal("bamboo bond", "panda", "large", "male");
+ panda.viewAnimal();
 
 function Pen(name) {
 	this.name = name;
@@ -41,11 +41,10 @@ function Pen(name) {
 
 }
 
-// var pandaPen = new Pen("Panda Pen");
-// pandaPen.addAnimal("1234");
-// pandaPen.addAnimal(panda);
-// pandaPen.viewPen();
-// pandaPen.deleteAnimal("bamboo bond");
+ var pandaPen = new Pen("Panda Pen");
+ pandaPen.addAnimal(panda);
+ //pandaPen.viewPen();
+ //pandaPen.deleteAnimal("bamboo bond");
 // pandaPen.viewPen();
 
 function Zoo(name) {
@@ -66,7 +65,11 @@ function Zoo(name) {
 	};
 	this.viewPen = function(penName) {
 		var currentPen = this.findPen(penName);
-		currentPen.viewPen();
+		if (currentPen === false) {
+			console.log("Pen is not found");
+		} else {
+			currentPen.viewPen();
+		}
 	};
 	this.findPen = function(penName) {
 		var foundPen = false;
@@ -75,6 +78,7 @@ function Zoo(name) {
 				return foundPen = pen;
 			}
 		});
+		console.log("Hello")
 		return foundPen;
 	};
 	this.deletePen = function(penName) {
@@ -96,7 +100,7 @@ function Zoo(name) {
 		if (foundAnimal === false || foundPen === false) {
 			console.log("Please enter a valid entry.");
 		} else {
-			foundPen.push(foundAnimal);
+			foundPen.animalArray.push(foundAnimal);
 			var animalIndex = this.holdingPen.indexOf(foundAnimal);
 			this.holdingPen.splice(animalIndex, 1);
 		};
@@ -116,16 +120,17 @@ function Zoo(name) {
 				console.log("Please enter a valid entry.");
 			} else {
 				this.holdingPen.push(foundAnimal);
-				var animalIndex = foundPen.indexOf(foundAnimal);
-				foundPen.splice(animalIndex, 1);
+				var animalIndex = foundPen.animalArray.indexOf(foundAnimal);
+				foundPen.animalArray.splice(animalIndex, 1);
 			}
 		}
 	};
 }
 
-// var happyZoo = new Zoo("Happy's Zoo");
-// happyZoo.addPen(pandaPen);
-// happyZoo.viewZoo();
+ var happyZoo = new Zoo("Happy's Zoo");
+ happyZoo.addPen(pandaPen);
+ happyZoo.viewZoo();
+ happyZoo.viewPen(pandaPen);
 // happyZoo.deletePen("Panda Pen");
 // happyZoo.viewZoo();
 var zooKeeper = {
@@ -162,7 +167,7 @@ var zooKeeper = {
 	},
 
 	menu: function() {
-		switch(this.getInput("What would you like to do in your zoo? \n 1 - Create a new Pen \n 2 - Create a new animal \n 3 - Add your animal to a pen \n 4 - Remove animal from pen \n 5 - Delete a pen \n 8 - Quit the game")) {
+		switch(this.getInput("What would you like to do in your zoo? \n 1 - Create a new Pen \n 2 - Create a new animal \n 3 - Add your animal to a pen \n 4 - Remove animal from pen \n 5 - Delete a pen \n 6 - View all the animals in the zoo \n 7 - View all the animals in a pen \n 8 - Quit the game")) {
 			case '1': 
 				this.createPen();
 				this.menu();
@@ -183,6 +188,7 @@ var zooKeeper = {
 				this.menu();
 			case '7':
 				this.currentZoo.viewPen(this.getInput("Please give name of Pen you would like to view:"));
+				this.menu();
 			case '8':
 				this.closing();
 				break;
@@ -193,7 +199,7 @@ var zooKeeper = {
 	}
 }
 
-zooKeeper.opening();
+//zooKeeper.opening();
 
 
 
