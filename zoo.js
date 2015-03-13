@@ -12,6 +12,11 @@ function Zoo() {
   this.addAnimal = function(animal) {
     this.freeRangeAnimals.push(animal);
   }
+  this.addPen = function(pen) {
+    this.pens.push(pen);
+    // console.log("test in Zoo: " + pen.name);
+    // console.log("test in Zoo this.pens: " + this.pens);
+  }
 }
 
 function Pen(name) {
@@ -40,18 +45,27 @@ switch (userInput) {
   case '1':
     zoo.addAnimal(new Animal(getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
     break;
+
   case '2':
+    zoo.addPen(new Pen(getInput("Enter name of pen:")));
+    // console.log("Test pens in switch: " + zoo.pens[0].name);
     break;
+
   case '3':
     break;
+
   case '4':
     break;
+
   case '5':
     break;
+
   case '6':
     break;
+
   case '7':
     break;
+
   case '8':
     break;
   default:
