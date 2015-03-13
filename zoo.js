@@ -17,6 +17,12 @@ function Zoo() {
     // console.log("test in Zoo: " + pen.name);
     // console.log("test in Zoo this.pens: " + this.pens);
   }
+  this.removePen = function(penName) {
+  	for (var i = 0; i < this.pens.length; i++) {
+  		console.log(this.pens[i].name);
+  	};
+
+  }
 }
 
 function Pen(name) {
@@ -34,40 +40,56 @@ function getInput(userPrompt) {
   return sget(userPrompt).trim();
 }
 
+var zoo = new Zoo();
+var zooKeeping = true;
+
 console.log("Welcome to the zoo!");
 
-console.log("What would you like to do in the zoo?\n" + "1: Add an animal.\n" + "2: Build an animal pen.\n" + "3: Remove a pen.\n" + "4: Add an animal to a pen.\n" + "5: Remove an animal from a pen.\n" + "6: View all the animals in a pen.\n" + "7: View all the animals in the zoo.\n" + "8: Quit");
-var userInput = getInput();
+while (zooKeeping) {
+	console.log("What would you like to do in the zoo?\n"
+		+ "1: Add an animal.\n"
+		+ "2: Build an animal pen.\n"
+		+ "3: Remove a pen.\n"
+		+ "4: Add an animal to a pen.\n"
+		+ "5: Remove an animal from a pen.\n"
+		+ "6: View all the animals in a pen.\n"
+		+ "7: View all the animals in the zoo.\n"
+		+ "8: Quit");
+	var userInput = getInput();
 
-var zoo = new Zoo();
+	switch (userInput) {
+	  case '1':
+	    zoo.addAnimal(new Animal(getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
+	    break;
 
-switch (userInput) {
-  case '1':
-    zoo.addAnimal(new Animal(getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
-    break;
+	  case '2':
+	    zoo.addPen(new Pen(getInput("Enter name of pen:")));
+	    // console.log("Test pens in switch: " + zoo.pens[0].name);
+	    break;
 
-  case '2':
-    zoo.addPen(new Pen(getInput("Enter name of pen:")));
-    // console.log("Test pens in switch: " + zoo.pens[0].name);
-    break;
+	  case '3':
+	  	zoo.removePen();
+	    break;
 
-  case '3':
-    break;
+	  case '4':
+	    break;
 
-  case '4':
-    break;
+	  case '5':
+	    break;
 
-  case '5':
-    break;
+	  case '6':
+	    break;
 
-  case '6':
-    break;
+	  case '7':
+	    break;
 
-  case '7':
-    break;
+	  case '8':
+	  	console.log("Thank you for visiting the zoo.  Please come again.")
+	  	zooKeeping = false;
+	    break;
+	  default:
+	  	console.log("Invalid input. Please select from the options below.");
+	  	continue;
+	}
 
-  case '8':
-    break;
-  default:
 }
-
