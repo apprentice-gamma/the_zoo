@@ -35,8 +35,9 @@ function Zoo(){
 	this.createAnimal = function (species, size, gender){
 		console.log("Adding new animal...");
 		this.animals.push(new Animal(species, size, gender));
-		console.log("Added " + animals[-1]);
-	};  //  use this to call funciton later   this.createAnimal(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?"));
+		console.log(this.animals);
+		console.log(this.animals[this.animals.length-1].species);
+	};  
 	
 
 	this.removeAnimal = function (){};
@@ -51,3 +52,8 @@ function Zoo(){
 var DLZoo = new Zoo();
 //Initialize the Zoo with a few animals
 console.log("Adding some basic animals to your zoo...");
+DLZoo.animals.push(new Animal("Panda", "Medium", "Female"));
+
+
+DLZoo.createAnimal(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?"));
+
