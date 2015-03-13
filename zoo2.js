@@ -99,8 +99,28 @@ function Zoo(name) {
 			foundPen.push(foundAnimal);
 			var animalIndex = this.holdingPen.indexOf(foundAnimal);
 			this.holdingPen.splice(animalIndex, 1);
+		};
+	};
+	this.removeAnimalFromPen = function(animalName, penName) {
+		var foundAnimal = false;
+		var foundPen = this.findPen(penName);
+		if (foundPen === false) {
+			console.log("Error");
+		} else {
+			foundPen.forEach(function(animal) {
+				if (animal.name === animalName) {
+					return foundAnimal = animal;
+				}  
+			});
+			if (foundAnimal === false) {
+				console.log("Please enter a valid entry.");
+			} else {
+				this.holdingPen.push(foundAnimal);
+				var animalIndex = foundPen.indexOf(foundAnimal);
+				foundPen.splice(animalIndex, 1);
+			}
 		}
-	}
+	};
 }
 
 // var happyZoo = new Zoo("Happy's Zoo");
@@ -153,7 +173,7 @@ var zooKeeper = {
 				this.currentZoo.addAnimalInPen(this.getInput("Please give me name of animal you would like to put in a pen:"), this.getInput("Please give me name of pen you would like to place animal in:"));
 				this.menu();
 			case '4':
-				this.removeAnimalFromPen();
+				this.currentZoo.removeAnimalFromPen(this.getInput("Please give me name of animal you would like to remove from a pen:"), this.getInput("Please give me name of pen would you like to place animal in:"));
 				this.menu();
 			case '5':
 				this.currentZoo.deletePen(this.getInput("Please give name of Pen you would like to delete:"));
