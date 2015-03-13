@@ -18,33 +18,52 @@ b. Your program should not allow the zookeeper to add more than (4) total Animal
 c. Your program should not allow the zookeeper to add a BabyAnimal to a Pen unless you already have a male Animal and a female Animal living in the Pen.
 d. Your program should include Habitats, which should describe what a given Animal's habitat is like (desert, forest, hot, cold, etc.).*/
 function ZooProgram() {
+	var allAnimals = [];
+	var allPens = [];
+	var lion = new Animal(var template = { name:"Leo", species:"feline", size:"Adult", gender:"male", habitat:"desert" });
+	var bear = new Animal(var template = { name:"Winnie the Pooh", species:"sloth bear", size:"Adult", gender:"male", habitat:"forest" });
+	allAnimals.push(lion);
+	allAnimals.push(bear);
+
 	enterZoo();	
-	var lion = new Animal(var template={name:"Leo", species:"feline",size:"Adult", gender:"male", habitat:"desert"});
-	var bear = new Animal(var template={name:"Winnie the Pooh", species:"sloth bear",size:"Adult", gender:"male", habitat:"forest"});
-	function enterZoo(){
+
+	function enterZoo() {
 		console.log("Welcome to John & Nikki's Zoo!");
 
 		var quit = false;
 		while (!quit) {
 		displayMenu(menuOptions);
-		var selection = sget("What would you like to do?\n1.Create an animal\n2.Remove an animal from a pen\n3.Leave Zoo").trim();
+		var selection = sget("What would you like to do?\n1.Create an animal\n2.Remove an animal from a pen\n3.Display all animals in a specific pen\n4.Display all animals in the zoo\n5.Leave Zoo").trim();
 		switch(selection){
-			case '1': clearScreen();
+			case '1': 
+						clearScreen();
 					  newAnimal();
 					  break;
 
-			case '2': clearScreen();
+			case '2': 
+						clearScreen();
 					  removeAnimal();
 					  break;
 			
-			case '3': quit = true;
+			case '3': 
+						clearScreen();
+					  displayPen();
+					  break;
+
+			case '4': 
+						clearScreen();
+					  displayAll();
+					  break;
+
+			case '5': 
+						quit = true;
 					  break;
 			default: console.log("Invalid input!"); continue;
 		}
 	}
 	
 	//----------------------OBJECTS-----------------------------
-	function Animal (template){
+	function Animal(template) {
 		this.name = template.name;
 		this.species = template.species;
 		this.size = template.size;
@@ -52,7 +71,8 @@ function ZooProgram() {
 		this.habitat = template.habitat;
 		//this.zoosection = template.zoosection;
 	}
-	function Pen (){
+
+	function Pen() {
 		this.name = name;
 		this.animals=[];
 		this.add = function(animal) {
@@ -64,17 +84,34 @@ function ZooProgram() {
 		}
 	}
 	//-----------------------------------------------------------
-	function newAnimal(){
+	function newAnimal() {
 		var template = {};
 		var animalProperty =["What would you like to name your animal?", "What your animal's species?", "Is your animal a baby or an adult?", "Is your animal male or female?", "Where is your animal's habitat?"];
-		sget 7x
-		sget
-		ax
-		template.name = ax
-		var a = new Animal(template)
+		var keys = ["name", "species", "size", "gender", "habitat"];
+		for (var i=0; i<animalProperty.length; i++) {
+			var answer = sget(animalProperty[i]).trim();
+			template[keys[i]] = answer;
+		}
+		var animal = new Animal(template);
+		allAnimals.push(animal);
+		//create Pen if it doesn't already exist for this animal. Make it a separate function(s)
+	}
+
+	function removeAnimal() {
+
+
+		//remove Pen if this was the last animal. Make it a separate function(s)
+	}
+
+	function displayPen() {
+		//ask user for species. find pen. display
+	}
+
+	function displayAll() {
 
 	}
-function clearScreen() { process.stdout.write('\033c');}
+
+	function clearScreen() { process.stdout.write('\033c'); }
 }
 
 ZooProgram();
