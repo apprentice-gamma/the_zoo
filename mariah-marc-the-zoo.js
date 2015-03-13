@@ -24,27 +24,33 @@ function Animal(species, size, gender){
 // Create a pen
 function Pen(){
 	this.habitat = habitat;
+	this.number = penNumber;
 	this.population = population;
 	this.momAndDad = momAndDad;
-	this.ocupant = occupant;
+	this.occupant = occupant;
 }
 // create a Zoo object with methods
 function Zoo(){
+	
 	this.animals = [];
+	
 	this.pens = [];
+
 	this.createAnimal = function (species, size, gender){
 		console.log("\nAdding new animal...\n");
-		this.animals.push(new Animal(species, size, gender));
-		console.log(this.animals[this.animals.length-1].species);
+		this.animals.push(new Pen(species, size, gender));
+		console.log(this.animals[this.animals.length-1]);
 		zooMenu();
 	};  
 	
 
 	this.removeAnimal = function (){};
 	
-	this.addPen = function (){
-		console.log("I do nothing yet!");
-		zooMenu();
+	this.addPen = function (habitat){
+		// console.log("\nAdding new pen...\n");
+		// this.pen.push(new Pen(habitat));
+		// console.log("Adding pen number:" + this.pens.number + "\n      pen habitat: " +  this.pens[this.pens.length-1].habitat);
+		// zooMenu();
 	};
 
 	this.removePen = function (){
@@ -82,7 +88,7 @@ function zooMenu(){
 			break;
 
 		case "2":
-			DLZoo.removeAnimal();
+			DLZoo.removeAnimal(getUserInput();
 			break;
 
 		case "3":
@@ -128,7 +134,7 @@ function zooMenu(){
 
 
 function quit(){
-	console.log("\n  We hate to see you go, Zookeeper!\n  Please remember to come back and build a zoo again!", zooKeeperName);
+	console.log("\n  We hate to see you go, Zookeeper!\n  Please remember to come back and build a zoo again!");
 }
 
 
@@ -140,3 +146,5 @@ var DLZoo = new Zoo();
 console.log("Adding some basic animals to your zoo...");
 DLZoo.animals.push(new Animal("Panda", "Medium", "Female"));
 zooMenu();
+
+//  to re-set id numbers of animals to index numbers, you need a for loop that cycles through the entire array and sets the id number to the index number
