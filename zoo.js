@@ -25,6 +25,7 @@ var Zoo = {
 	displayZoo: function(){
 		console.log("These are the animals in the Zoo:")
 		for (var i = 0; i < this.pens.length; i++){
+			console.log("\nPen: "+this.pens[i].type+"\n");
 			for (var j = 0; j < this.pens[i].animals.length; j++){
 		console.log(this.pens[i].animals[j].name, "the", this.pens[i].animals[j].species);
 			}
