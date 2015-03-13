@@ -108,7 +108,33 @@ var zooKeeper = {
 	},
 	getInput: function(saying) {
 		return sget(saying).trim();
+	},	
+	menu: function() {
+		switch(getInput("What would you like to do in your zoo?")) {
+			case 1: 
+				this.createPen();
+				break;
+			case 2:
+				this.currentAnimal();
+				break;
+			case 3:
+				this.putAnimalInPen();
+				break;
+			case 4:
+				this.removeAnimal();
+				break;
+			case 5:
+				this.currentZoo.deletePen();
+				break;
+			case 6:
+				this.closing();
+				break;
+			default:
+				console.log("Enter in a valid entry");
+				arguments.callee();
+		}		
 	}
-	//NEED TO MAKE HOLDING PEN FOR ANIMALS that defaults the animals to go there	
 }
+
+
 
