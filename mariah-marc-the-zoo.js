@@ -49,11 +49,18 @@ function Zoo(){
 	this.displayAnimalsInZoo = function(){};
 };
 
+
+function zooMenu(){
+	console.log("\n________________________________________________\n-----------------------------------------------\n   Welcome to your new Zoo, Zookeeper %s!\n-----------------------------------------------\n", zooKeeperName);
+	var zooMenuChoice = getUserInput("There are quite a few things you can do at your zoo!\n\nYou currently have no animals in your zoo and have to build it!\n\nHere is the complete list of actions you can take: please pick the number of what you would like to do!\n\n1. Add an animal\n2. Remove an animal\n3. Add a pen\n4. Remove a pen\n5. Add an animal to a pen\n6. Remove an animal from a pen\n7. Display all animals in a pen\n8. Display all animals in the zoo\n9. Quit the Zoo Builder");
+}
+
+
+
+
+var zooKeeperName = getUserInput("\n\nInitializing the zoo game.  Please let us know your name:");
 var DLZoo = new Zoo();
 //Initialize the Zoo with a few animals
 console.log("Adding some basic animals to your zoo...");
 DLZoo.animals.push(new Animal("Panda", "Medium", "Female"));
-
-
-DLZoo.createAnimal(getUserInput("What type of animal is this?"), getUserInput("What size is this animal?"), getUserInput("What gender is this animal?"));
-
+zooMenu();
