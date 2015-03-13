@@ -49,8 +49,8 @@ var Zoo = {
 	zooMenu: function(){
 		console.log("\nHere are your choices:\n");
 		
-		for (i=0;i<zooMenu.length;i++){
-			console.log(i+") "+this.zooMenuChoices[i]+"\n");
+		for (i=0;i<this.zooMenuChoices.length;i++){
+			console.log((i+1)+") "+this.zooMenuChoices[i]+"\n");
 		}
 		
 		var input = this.handleInput();
