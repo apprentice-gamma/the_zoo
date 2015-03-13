@@ -20,8 +20,14 @@ var Zoo = {
 		this.zooMenu();
 	},
 
-	deletePen: function(){
-
+	deletePen: function(choice){
+		console.log("Are you sure you want to demolish the pen "+this.pens[choice].type+"?\nThis decision cannot be reversed and all animals inside will be crushed!");
+		var decision = sget("y/n:").toLowerCase().trim();
+		if (decision === "y")
+			this.pens.splice(choice, 1, "The ruins of "+this.pens[choice].type);
+			else
+			console.log("You decide to keep the pen around... for now.");
+		zooMenu();
 	},
 	//This method uses two for loops, the first to loop through the pens array, the other to loop through the animals array of
 	//each pen
