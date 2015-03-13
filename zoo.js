@@ -33,6 +33,22 @@ function Pen (){
 			this.animals[i].displayName();
 		};
 	};
+
+	this.getAnimalIndex = function(query){
+		for (var i = 0; i < this.animals.length; i++) {
+			if (query.toLowerCase() === this.animals[i].name.toLowerCase()) {
+				return i;
+			};			
+		};
+		console.log("Animal not found.");
+		return -1;
+	//refactor to use any property ie. function(query,property)	
+	};
+
+	this.delete = function(){
+		var animalIndex = this.getAnimalIndex(getUserInput("Name the animal you would like to delete."));
+		if (animalIndex === -1)
+	}
 };
 
 function Zoo (){
