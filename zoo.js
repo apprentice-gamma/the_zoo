@@ -62,7 +62,7 @@ var Zoo = {
 				break;
 			
 			case "2":
-				this.choosePen(remove);
+				this.choosePen('remove');
 				this.zooMenu();
 				break;
 			
@@ -72,7 +72,7 @@ var Zoo = {
 				break;
 			
 			case "4":
-				this.choosePen(relocate);
+				this.choosePen('relocate');
 				this.zooMenu();
 				break;
 			
@@ -82,15 +82,17 @@ var Zoo = {
 				break;
 			
 			case "6":
-				this.choosePen(show);
+				this.choosePen('show');
 				this.zooMenu();
 				break;
 
 			case "7":
 				console.log("\nYou did a good job today. Tomorrow you'll have to work a little harder. \nGoodbye.")
+				process.exit(0);
 				break;
 			
 			default:
+				this.zooMenu();
 		}
 
 	},
@@ -104,10 +106,31 @@ var Zoo = {
 		for (var i = 0; i < this.pens.length; i++){
 			console.log((i+1)+") "+this.pens[i].type);
 		}
-		var choice = parseInt(sget("Select the pen you would like to work with: ").trim());
-
+		
+		var choice = parseInt(this.handleInput().trim());
 		choice--; //so it matches up with the array's index values.
 
+		switch(action){
+			case 'remove':
+				this.deletePen(choice)
+				break;
+			case 'relocate':
+				this.pens[choice].removeAnimal();
+				break;
+			case 'show':
+				this.pens[choice].displayPen();
+				break;
+			default:
+				this.zooMenu();
+
+
+		}
+
+	},
+
+	deletePen: function(pen){
+
+	
 	}
 
 } 
@@ -121,8 +144,12 @@ var Pen = function(type, animals){
 	this.removeAnimal = function(animal){
 
 	};
-	this.displayPen = function(){
 
+	this.displayPen = function(){
+		console.log("\nPen: "+this.type+"\n");
+		for (var j = 0; j < this.animals.length; j++){
+			console.log(this.animals[j].name, "the", this.animals[j].species);
+		}
 	}
 }
 
