@@ -97,6 +97,8 @@ function Zoo(name) {
 			console.log("Please enter a valid entry.");
 		} else {
 			foundPen.push(foundAnimal);
+			var animalIndex = this.holdingPen.indexOf(foundAnimal);
+			this.holdingPen.splice(animalIndex, 1);
 		}
 	}
 }
