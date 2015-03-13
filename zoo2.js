@@ -90,8 +90,17 @@ var zooKeeper = {
 	createZoo: function() { 
 		prompt.question('What would you like to call your zoo? ', function(input){
 			this[currentZoo] = new Zoo(input);
+			//put in a function to create pen
 		});
 	}
-
+	createPen: function() {
+		prompt.question('What would you like to call your pen?', function(input) {
+			var currentPen = new Pen(input);
+			this.currentZoo.push(currentPen);
+			//
+		});
+	}
+	
+	//NEED TO MAKE HOLDING PEN FOR ANIMALS that defaults the animals to go there	
 }
 
