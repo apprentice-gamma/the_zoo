@@ -14,7 +14,10 @@ var Zoo = {
 	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Order a new animal.","Relocate an animal.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
 
 	addPen: function(){
-
+		var newPenType = sget("What would you like to call the new pen? ");
+		this.pens.push(new Pen(newPenType, []));
+		console.log("Your builders construct a new pen, called "+newPenType);
+		this.zooMenu();
 	},
 
 	deletePen: function(){
