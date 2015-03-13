@@ -25,6 +25,11 @@ function Zoo() {
   this.removePen = function(penName) {
   	for (var i = 0; i < this.pens.length; i++) {
   		if (this.pens[i].name === penName) {
+  			// move animals to the freeRangeAnimals array in the zoo.
+  			//console.log("Test pen population before concat: " + this.pens[i].animals);
+  			//console.log("Test freeRange before concat: " + this.freeRangeAnimals + ".");
+  			this.freeRangeAnimals.push(this.pens[i].animals);
+  			//console.log("Test freeRange after concat: " + this.freeRangeAnimals + ".");
    			this.pens.splice(i, 1);
   		}
   	}
@@ -51,8 +56,9 @@ var zooKeeping = true;
 
 // Temp test data
 zoo.addPen(new Pen("doghouse"));
+zoo.pens[0].animals.push("shepherd", "bulldog", "terrier");
 zoo.addPen(new Pen("monkey house"));
-zoo.addPen(new Pen("zebra house"));
+zoo.addPen(new Pen("zebra"));
 
 
 console.log("Welcome to the zoo!");
@@ -84,7 +90,7 @@ while (zooKeeping) {
 	  	break;
 
 	  case '4':
-	    break;
+		    break;
 
 	  case '5':
 	    break;
