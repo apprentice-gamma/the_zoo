@@ -73,7 +73,7 @@ function ZooProgram() {
 	}
 
 	function Pen(name) {
-		this.name = name;
+		this.penName = name;
 		this.animals=[];
 		this.add = function(animal) {
 			this.animals.push(animal);
@@ -89,31 +89,62 @@ function ZooProgram() {
 		var animalProperty =["What would you like to name your animal?", "What your animal's species?", "Is your animal a baby or an adult?", "Is your animal male or female?", "Where is your animal's habitat?"];
 		var keys = ["name", "species", "size", "gender", "habitat"];
 		for (var i=0; i<animalProperty.length; i++) {
+			clearScreen();
 			var answer = sget(animalProperty[i]).trim();
 			template[keys[i]] = answer;
 		}
 		var animal = new Animal(template);
 		allAnimals.push(animal);
 		checkPen(animal);
-		//create Pen if it doesn't already exist for this animal. Make it a separate function(s)
+		enterZoo();
+		//check for duplicates. if errors, restart newAnimal
 	}
 	function checkPen(animal){
 		for (var i=0; i<allPens.length; i++) {
-			if(allPens[i].name===animal.name && allPens[i].animals.length > 0){
+			if (allPens[i].penName === animal.species && allPens[i].animals.length > 0) {
 				allPens[i].add(animal);
-			}else {
-				var createdPen = new Pen(animal.name);
+			} else {
+				var createdPen = new Pen(animal.species);
 				createdPen.add(animal);
-
 			}
 		}
 	}
 	
 	function removeAnimal() {
-		
-
-
+		clearScreen();
+		var speciesToRemove = sget("Which species of animal would you like to remove?").trim();
+		var found = false;
+		for (var i=0; i<allPens.length; i++){ 
+			if (allPens[i].penName === speciesToRemove) {
+				var penPlaceholder = allPens[i];
+				found = true;
+			} 
+		}
+		if (found === false){
+			console.log("A pen with that name was not found.");
+			removeAnimal();
+		}
+		found = false;
+		clearScreen();
+		var animalToRemove = sget("Please enter the name of the animal you would like to remove").trim();
+		for (var j=0; j<penPlaceholder.animals.length; j++){ 
+			if (penPlaceholder.animals[j] === animalToRemove) {
+				penPlaceholder.animals.splice(j, 1);
+				found = true;
+				displayPen();
+			} 
+		}
+		if (found === false){
+			console.log("An animal with that name was not found.");
+			removeAnimal();
+		}
+		enterZoo();
 		//remove Pen if this was the last animal. Make it a separate function(s)
+		//if errors, restart removeAnimal()
+	}
+
+	function searchAnimal(animal) {
+
 	}
 
 	function displayPen() {
