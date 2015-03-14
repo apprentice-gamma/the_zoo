@@ -50,6 +50,20 @@ function Pen(name) {
   this.animals = [];
 }
 
+Pen.prototype.displayAnimals = function() {
+  this.animals.forEach(function(animal) {
+    console.log("Name: " + animal.name + "\tSpecies: " + animal.species + "\tSize: " + animal.size + "\tGender: " + animal.gender + "\n");
+  });
+};
+
+Pen.prototype.removeAnimal = function(animalName) {
+  for (var i = 0, len = this.animals.length; i < len; i++) {
+    if (this.animals[i].name === animalName) {
+      this.animals.splice(i, 1);
+    }
+  }
+};
+
 function Animal(name, species, size, gender) {
   this.name = name;
   this.species = species;
@@ -81,6 +95,9 @@ console.log("Zoo animals array pre " + zoo.animals.length);
 zoo.addAnimalToPen("spuds", "Dog pound");
 console.log("Dogpound post-addition: " + dogPound.animals.length);
 console.log("Zoo animals array post " + zoo.animals.length);
+
+console.log("NEW");
+zoo.findPenByName("Dog pound").displayAnimals();
 // var bessie = zoo.findAnimalByName("bessie");
 // console.log(bessie.name);
 // console.log(bessie.gender);
