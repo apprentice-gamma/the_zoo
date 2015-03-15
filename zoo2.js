@@ -6,7 +6,7 @@ function Animal(name, species, size, gender) {
 	this.size = size;
 	this.gender = gender;
 	this.viewAnimal = function() {
-		return console.log(this.species + " is the species of the animal." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".");
+		return console.log(this.name + "is a " + this.species + " ." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".");
 	}
 }
 
@@ -59,20 +59,21 @@ function Zoo(name) {
 		this.penArray.forEach(function(pen){
 			pen.viewPen();
 		});
+		this.viewHoldingPen();
+		};
+	this.viewHoldingPen = function(){
 		console.log("In the Holding Pen is: ");
 		this.holdingPen.forEach(function(animal){
 			animal.viewAnimal();
 		});
 	};
+
 	this.viewPen = function(penName) {
 		var currentPen = this.findPen(penName);
-		if (currentPen === false) {
+		if (penName === "HOLDING PEN") {
+			this.viewHoldingPen();
+		}else if (currentPen === false) {
 			console.log("Pen is not found");
-		} else if (penName === "HOLDING PEN") {
-			console.log("In the holding pen is: ");
-			this.holdingPen.forEach(function(animal) {
-				animal.viewAnimal();
-			});
 		} else {
 			currentPen.viewPen();
 		}
