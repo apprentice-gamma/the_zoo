@@ -7,11 +7,24 @@ var Animal = function(name, species, size, gender){
 	this.gender = gender;
 }
 
+var BabyAnimal = function(name, species, gender){
+	this.name = "baby " + name; 
+	this.species = species; 
+	this.gender = gender;
+	this.size = "small";
+	this.sound = function(){
+		console.log("WaaAAaaa! WaaAAaaa!");
+	};	
+}
+
+BabyAnimal.prototype = new Animal();
+BabyAnimal.prototype.constructor = BabyAnimal;
+
 var Zoo = {
 	
 	pens: [],
 
-	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Order a new animal.","Relocate an animal.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
+	zooMenuChoices: ["Build a new pen for your animals.","Demolish a pen.","Order a new animal.","Start a family with a new baby animal.","Relocate an animal.","Check out zoo inventory.", "Check out a specific pen.","Exit the Zoo for today."],
 
 	addPen: function(){
 		var newPenType = sget("What would you like to call the new pen? ").trim();
@@ -85,22 +98,28 @@ var Zoo = {
 				break;
 			
 			case "4":
+				console.log("In which pen would you like to start the family")
+				this.choosePen('baby');
+				this.zooMenu();
+				break;
+
+			case "5":
 				console.log("Which pen would you like to remove an animal from?")
 				this.choosePen('relocate');
 				this.zooMenu();
 				break;
 			
-			case "5":
+			case "6":
 				this.displayZoo();
 				this.zooMenu();
 				break;
 			
-			case "6":
+			case "7":
 				this.choosePen('show');
 				this.zooMenu();
 				break;
 
-			case "7":
+			case "8":
 				console.log("\nYou did a good job today. Tomorrow you'll have to work a little harder. \nGoodbye.")
 				process.exit(0);
 				break;
@@ -130,6 +149,9 @@ var Zoo = {
 				break;
 			case 'add2':
 				this.pens[choice].addAnimal(animal);
+				break;
+			case 'baby':
+				this.pens[choice].addBabyAnimal();
 				break;
 			case 'remove':
 				this.deletePen(choice);			
@@ -184,10 +206,45 @@ var Pen = function(type, animals){
 		else {
 			this.animals.push(animal);
 		}
-
-		
 	};
-	
+
+	this.addBabyAnimal = function(){
+		var parentArray = [];
+		var maleHit = 0;
+		var femaleHit = 0;
+		var gender = sget("Is the animal male or female?").trim();
+		var species = sget("What kind of animal is it?").trim();
+		this.animals.forEach(function(animal){
+			if (species.toLowerCase() === animal.species.toLowerCase())
+				parentArray.push(animal);
+		});
+		//making sure things are getting pushed to parents array properly
+		console.log(parentArray);
+		if (parentArray.length >= 2 && this.hasParents(parentArray)){
+			var name = sget("What would you like to name your animal?").trim();
+			this.animals.push(new BabyAnimal (name, species, gender));
+		} else {
+			console.log("You can't create a baby without parents!")
+		}
+
+
+	};	
+	this.hasParents = function(array){
+		var femaleHit = 0; 
+		var maleHit = 0;
+		for (var i = 0; i < array.length; i++){
+			if (array[i].gender === "female"){
+				femaleHit = 1;
+			} else {
+				maleHit = 1;
+			}
+		};
+		if (maleHit + femaleHit === 2){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	this.displayPen = function(){
 		console.log("\n------------------------------\nPen: "+this.type+"\n");
