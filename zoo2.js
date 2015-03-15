@@ -68,6 +68,11 @@ function Zoo(name) {
 		var currentPen = this.findPen(penName);
 		if (currentPen === false) {
 			console.log("Pen is not found");
+		} else if (penName === "HOLDING PEN") {
+			console.log("In the holding pen is: ");
+			this.holdingPen.forEach(function(animal) {
+				animal.viewAnimal();
+			});
 		} else {
 			currentPen.viewPen();
 		}
