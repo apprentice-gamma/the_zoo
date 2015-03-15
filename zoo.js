@@ -74,7 +74,7 @@ function ZooProgram() {
 		}
 	}
 	
-	//----------------------OBJECTS-----------------------------
+	//----------------------CONSTRUCTORS-----------------------------
 	function Animal(template) {
 		this.name = template.name;
 		this.species = template.species;
@@ -82,6 +82,10 @@ function ZooProgram() {
 		this.gender = template.gender;
 		this.habitat = template.habitat;
 		//this.zoosection = template.zoosection;
+	}
+
+	function BabyAnimal(template) {
+		Animal.call(this, template);
 	}
 	
 	function Pen(name) {
@@ -112,9 +116,15 @@ function ZooProgram() {
 		if (template.name in allAnimals) {
 			console.log("Sorry, the name is already taken. Try again.");
 		} else {
-			var animal = new Animal(template);
-			allAnimals[animal.name] = animal;
-			checkPenNew(animal);
+			if (template.size === "adult") {
+				var animal = new Animal(template);
+				allAnimals[animal.name] = animal;
+				checkPenNew(animal);
+			} else {
+				var animal = new BabyAnimal(template);
+				allAnimals[animal.name] = animal;
+				checkPenNew(animal);
+			}
 		}
 	}
 
