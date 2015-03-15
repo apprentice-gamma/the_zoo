@@ -6,7 +6,7 @@ function Animal(name, species, size, gender) {
 	this.size = size;
 	this.gender = gender;
 	this.viewAnimal = function() {
-		return console.log(this.name + "is a " + this.species + " ." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".");
+		return console.log(this.name + " is a " + this.species + " ." + "The animal is a " + this.size + " animal. " + "It is a " + this.gender + ".");
 	}
 }
 
@@ -26,13 +26,8 @@ function Pen(name) {
 		});
 	};
 	this.deleteAnimal = function(animalName) {
-		var animalIndex = false;
-		this.animalArray.forEach(function(animal, index) {
-			if (animal.name === animalName) {
-				return animalIndex = index;
-			} 
-		});
-		if (animalIndex === false) {
+		var animalIndex = this.animalArray.indexOf(this.findAnimal(animalName));
+		if (animalIndex === -1) {
 			console.log("Please enter valid animal.");
 		} else {
 			this.animalArray.splice(animalIndex, 1);
