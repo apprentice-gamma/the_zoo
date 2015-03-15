@@ -20,25 +20,17 @@ d. Your program should include Habitats, which should describe what a given Anim
 var sget = require("sget");
 
 function ZooProgram() {
-	var allAnimals = [];
-	var allPens = [];
+	var allAnimals = {};
+	var allPens = {};
 
 	initializeZoo()
 	enterZoo();	
 
 	function initializeZoo() {
-		var template = { name:"leo", species:"lion", size:"adult", gender:"male", habitat:"desert" };
-		var lion = new Animal(template);
-		template = { name:"winnie the pooh", species:"bear", size:"adult", gender:"male", habitat:"forest" };
-		var bear = new Animal(template);
-		allAnimals.push(lion);
-		allAnimals.push(bear);
-		var lionPen = new Pen(lion.species);
-		var bearPen = new Pen(bear.species);
-		lionPen.animals.push(lion);
-		bearPen.animals.push(bear);
-		allPens.push(lionPen);
-		allPens.push(bearPen);
+		var template1 = { name:"leo", species:"lion", size:"adult", gender:"male", habitat:"desert" };
+		var template2 = { name:"winnie the pooh", species:"bear", size:"adult", gender:"male", habitat:"forest" };
+		createNewAnimal(template1);
+		createNewAnimal(template2);		
 	}
 
 	function enterZoo() {
@@ -93,14 +85,13 @@ function ZooProgram() {
 	}
 	
 	function Pen(name) {
-		this.penName = name;
-		this.animals=[];
+		this.name = name;
+		this.animals = {};
 		this.add = function(animal) {
-			this.animals.push(animal);
+			this.animals[animal.name] = animal;
 		}
 		this.remove = function(animal) {
-			var animalLocation = animals.indexOf(animal);
-			this.animals.splice(animalLocation, 1);
+			delete this.animals[animal.name];
 		}
 	}
 	//-----------------------------------------------------------
@@ -113,98 +104,81 @@ function ZooProgram() {
 			var answer = sget(animalProperty[i]).trim().toLowerCase();
 			template[keys[i]] = answer;
 		}
-		var animal = new Animal(template);
-		allAnimals.push(animal);
-		checkPen(animal);
+		createNewAnimal(template);
 		enterZoo();
-		//check for duplicates. if errors, restart newAnimal
 	}
-	function checkPenForNew(animal){
-		for (var i=0; i<allPens.length; i++) {
-			if (allPens[i].penName === animal.species && allPens[i].animals.length > 0) {
-				allPens[i].add(animal);
-			} else {
-				var createdPen = new Pen(animal.species);
-				createdPen.add(animal);
-			}
+
+	function createNewAnimal(template) {
+		if (template.name in allAnimals) {
+			console.log("Sorry, the name is already taken. Try again.");
+		} else {
+			var animal = new Animal(template);
+			allAnimals[animal.name] = animal;
+			checkPenNew(animal);
 		}
 	}
 
-	function checkPenForLast(pen) {
-		if (pen.animals.length === 0) { 
-			for (var i=0; i<allPens.length; i++) {
-				if (allPens[i].name === pen.name) {
-					allPens.splice(i, 1);
-				}
-			}
+	function checkPenNew(animal) {		
+		if (animal.species in allPens) { allPens[animal.species].add(animal); }
+		else { 
+			var newPen = new Pen(animal.species);
+			newPen.add(animal);
+			allPens[newPen.name] = newPen;
 		}
 	}
 	
 	function removeAnimal() {
 		clearScreen();
 		var speciesToRemove = sget("Which species of animal would you like to remove?").trim().toLowerCase();
-		var found = false;
-		for (var i=0; i<allPens.length; i++){ 
-			if (allPens[i].penName === speciesToRemove) {
-				var penPlaceholder = allPens[i];
-				found = true;
-			} 
-		}
-		if (found === false){
-			console.log("A pen with that name was not found.");
+		if (speciesToRemove in allPens) {
+			var animalToRemove = sget("Please enter the name of the animal you would like to remove").trim().toLowerCase();
+			clearScreen();
+			if (animalToRemove in allPens[speciesToRemove].animals) {
+				delete allPens[speciesToRemove].animals[animalToRemove];
+				delete allAnimals[animalToRemove];
+				console.log(allPens[speciesToRemove].animals);
+				console.log("YO");
+			} else {
+				console.log("Sorry that animal is not found.");
+				removeAnimal();
+			}
+		} else { 
+			console.log("Sorry that species is not found.");
 			removeAnimal();
 		}
-		found = false;
-		clearScreen();
-		var animalToRemove = sget("Please enter the name of the animal you would like to remove").trim().toLowerCase();
-		for (var j=0; j<penPlaceholder.animals.length; j++){ 
-			if (penPlaceholder.animals[j].name === animalToRemove) {
-				removeFromAllAnimals(penPlaceholder.animals[j]);
-				penPlaceholder.animals.splice(j, 1);
-				found = true;
-			} 
-		}
-		if (found === false){
-			console.log("An animal with that name was not found.");
-			removeAnimal();
-		}
-		checkPenForLast(penPlaceholder);
+
+		checkPenLast(allPens[speciesToRemove]);
 		clearScreen();
 		enterZoo();
 	}
 
-	function removeFromAllAnimals(animal) {
-		for (var i=0; i<allAnimals.length; i++) {
-			if (allAnimals[i] === animal) { allAnimals.splice(i, 1); }
-		}
+	function checkPenLast(pen) {
+		if (pen.animals.length === 0 && pen in allPens) { delete allPens[pen]; }
 	}
 
 	function displayPen() {
 		clearScreen();
-		console.log("Here is a list of your pens...");
-		for (var i=0; i<allPens.length; i++){
-			console.log("The " + allPens[i].penName + " Pen");
-		}
-		console.log("------------------");
-		var whichPen = sget("Which pen would you like to display?").trim().toLowerCase();
-
-		for (var j=0; j<allPens.length; j++) {
-			if (allPens[j].penName === whichPen) { var selectedPen = allPens[j]; }
-		}
-
-		console.log("Here are the animals in the " + selectedPen.penName + " Pen");
-		for (var g=0; g<selectedPen.animals.length; g++){
-			console.log("------------------");
-			console.log("Name: " + selectedPen.animals[g].name + "\n Size: "  + selectedPen.animals[g].size + "\n Gender: " + selectedPen.animals[g].gender);
-		}
+		var whichPen = sget("Which pen would you like to display? Remember that pen names are the animal's species name.").trim().toLowerCase();
+		if (whichPen in allPens) {
+			console.log("Here are the animals in the " + whichPen + " pen");
+			for (var i in allPens[whichPen].animals) {
+				var placeholder = allPens[whichPen].animals[i];
+				console.log("------------------");
+				console.log("Name: " + placeholder.name + "\n Size: "  + placeholder.size + "\n Gender: " + placeholder.gender);	
+			}	
+		} else {
+			console.log("The " + whichPen + " pen doesn't exist in this zoo.");
+		}	
 		enterZoo();
 	}
 
 	function displayAll() {
 		clearScreen();
-		for (var i=0; i<allAnimals.length; i++){
-			console.log("------------------");
-			console.log("Name: " + allAnimals[i].name +"\n Species: " + allAnimals[i].species + "\n Size: "  + allAnimals[i].size + "\n Gender: " + allAnimals[i].gender);
+		for (var key in allAnimals) {
+			if (allAnimals.hasOwnProperty(key)) { 
+				console.log("------------------"); 
+				console.log("Name: " + allAnimals[key].name +"\n Species: " + allAnimals[key].species + "\n Size: "  + allAnimals[key].size + "\n Gender: " + allAnimals[key].gender);
+			}
 		}
 		enterZoo();
 	}
