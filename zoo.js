@@ -220,8 +220,7 @@ var Pen = function(type, animals){
 			if (species.toLowerCase() === animal.species.toLowerCase())
 				parentArray.push(animal);
 		});
-		//making sure things are getting pushed to parents array properly
-		console.log(parentArray);
+		
 		if (parentArray.length >= 2 && this.hasParents(parentArray)){
 			var name = sget("What would you like to name your animal?").trim();
 			this.animals.push(new BabyAnimal (name, species, gender));
