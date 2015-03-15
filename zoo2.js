@@ -104,13 +104,17 @@ function Zoo(name) {
 			this.penArray.splice(penIndex, 1);
 		}
 	};
-	this.addAnimalInPen = function(animalName, penName) {
+	this.findAnimalInHolding = function(animalName){
 		var foundAnimal = false;
 		this.holdingPen.forEach(function(animal) {
 			if (animal.name === animalName) {
 				return foundAnimal = animal;
 			}  
 		});
+		return foundAnimal;
+	};
+	this.addAnimalInPen = function(animalName, penName) {
+		var foundAnimal = this.findAnimalInHolding(animalName);
 		var foundPen = this.findPen(penName); 
 		if (foundAnimal === false || foundPen === false) {
 			console.log("Please enter a valid entry.");
