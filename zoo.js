@@ -201,6 +201,7 @@ var Pen = function(type, animals){
 			var species = sget("What kind of animal is it?").trim();
 			var size = sget("Is the animal large, medium, or small in size?").trim();
 			var gender = sget("Is the animal male or female?").trim();
+			gender = this.maleOrFemale(gender);
 			this.animals.push(new Animal(name, species, size, gender));
 		}
 		else {
@@ -213,6 +214,7 @@ var Pen = function(type, animals){
 		var maleHit = 0;
 		var femaleHit = 0;
 		var gender = sget("Is the animal male or female?").trim();
+		gender = this.maleOrFemale(gender);
 		var species = sget("What kind of animal is it?").trim();
 		this.animals.forEach(function(animal){
 			if (species.toLowerCase() === animal.species.toLowerCase())
@@ -226,9 +228,8 @@ var Pen = function(type, animals){
 		} else {
 			console.log("You can't create a baby without parents!")
 		}
-
-
 	};	
+
 	this.hasParents = function(array){
 		var femaleHit = 0; 
 		var maleHit = 0;
@@ -244,7 +245,16 @@ var Pen = function(type, animals){
 		} else {
 			return false;
 		}
-	}
+	};
+
+	this.maleOrFemale = function(gender){
+		if (gender.charAt(0) === "m"){
+			gender = "male";
+		} else {
+			gender = "female";
+		}
+		return gender;
+	};
 
 	this.displayPen = function(){
 		console.log("\n------------------------------\nPen: "+this.type+"\n");
