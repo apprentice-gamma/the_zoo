@@ -41,8 +41,8 @@ function Pen(name) {
 
 }
 
- var pandaPen = new Pen("Panda Pen");
- pandaPen.addAnimal(panda);
+ //var pandaPen = new Pen("Panda Pen");
+ //pandaPen.addAnimal(panda);
  //pandaPen.viewPen();
  //pandaPen.deleteAnimal("bamboo bond");
 // pandaPen.viewPen();
@@ -59,6 +59,7 @@ function Zoo(name) {
 		this.penArray.forEach(function(pen){
 			pen.viewPen();
 		});
+		console.log("In the Holding Pen is: ");
 		this.holdingPen.forEach(function(animal){
 			animal.viewAnimal();
 		});
@@ -75,10 +76,10 @@ function Zoo(name) {
 		var foundPen = false;
 		this.penArray.forEach(function(pen) {
 			if (pen.name === penName) {
+		console.log("Hello")
 				return foundPen = pen;
 			}
 		});
-		console.log("Hello")
 		return foundPen;
 	};
 	this.deletePen = function(penName) {
@@ -111,7 +112,7 @@ function Zoo(name) {
 		if (foundPen === false) {
 			console.log("Error");
 		} else {
-			foundPen.forEach(function(animal) {
+			foundPen.animalArray.forEach(function(animal) {
 				if (animal.name === animalName) {
 					return foundAnimal = animal;
 				}  
@@ -127,10 +128,10 @@ function Zoo(name) {
 	};
 }
 
- var happyZoo = new Zoo("Happy's Zoo");
- happyZoo.addPen(pandaPen);
- happyZoo.viewZoo();
- happyZoo.viewPen(pandaPen);
+ //var happyZoo = new Zoo("Happy's Zoo");
+ //happyZoo.addPen(pandaPen);
+ //happyZoo.viewZoo();
+ //happyZoo.viewPen("Panda Pen");
 // happyZoo.deletePen("Panda Pen");
 // happyZoo.viewZoo();
 var zooKeeper = {
@@ -171,35 +172,43 @@ var zooKeeper = {
 			case '1': 
 				this.createPen();
 				this.menu();
+				break;
 			case '2':
 				this.createAnimal();
 				this.menu();
+				break;
 			case '3':
 				this.currentZoo.addAnimalInPen(this.getInput("Please give me name of animal you would like to put in a pen:"), this.getInput("Please give me name of pen you would like to place animal in:"));
 				this.menu();
+				break;
 			case '4':
 				this.currentZoo.removeAnimalFromPen(this.getInput("Please give me name of animal you would like to remove from a pen:"), this.getInput("Please give me name of pen would you like to place animal in:"));
 				this.menu();
+				break;
 			case '5':
 				this.currentZoo.deletePen(this.getInput("Please give name of Pen you would like to delete:"));
 				this.menu();
+				break;
 			case '6':
 				this.currentZoo.viewZoo();
 				this.menu();
+				break;
 			case '7':
 				this.currentZoo.viewPen(this.getInput("Please give name of Pen you would like to view:"));
 				this.menu();
+				break;
 			case '8':
 				this.closing();
 				break;
 			default:
 				console.log("Enter in a valid entry");
 				this.menu();
+				break;
 		}		
 	}
 }
 
-//zooKeeper.opening();
+zooKeeper.opening();
 
 
 
