@@ -37,7 +37,16 @@ function Pen(name) {
 		} else {
 			this.animalArray.splice(animalIndex, 1);
 		}
-	}
+	};
+	this.findAnimal = function(animalName) {
+		var foundAnimal = false
+		this.animalArray.forEach(function(animal) {
+			if (animal.name === animalName) {
+				return foundAnimal = animal;
+			}  
+		});
+		return foundAnimal;
+	};
 
 }
 
@@ -82,7 +91,6 @@ function Zoo(name) {
 		var foundPen = false;
 		this.penArray.forEach(function(pen) {
 			if (pen.name === penName) {
-		console.log("Hello")
 				return foundPen = pen;
 			}
 		});
@@ -113,16 +121,11 @@ function Zoo(name) {
 		};
 	};
 	this.removeAnimalFromPen = function(animalName, penName) {
-		var foundAnimal = false;
 		var foundPen = this.findPen(penName);
 		if (foundPen === false) {
 			console.log("Error");
 		} else {
-			foundPen.animalArray.forEach(function(animal) {
-				if (animal.name === animalName) {
-					return foundAnimal = animal;
-				}  
-			});
+			var foundAnimal = foundPen.findAnimal(animalName);
 			if (foundAnimal === false) {
 				console.log("Please enter a valid entry.");
 			} else {
