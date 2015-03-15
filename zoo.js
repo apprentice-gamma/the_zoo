@@ -33,13 +33,14 @@ var Zoo = {
 	//This method uses two for loops, the first to loop through the pens array, the other to loop through the animals array of
 	//each pen
 	displayZoo: function(){
-		console.log("These are the animals in the Zoo:")
+		console.log("\n------------------------------\nThese are the animals in the Zoo:")
 		for (var i = 0; i < this.pens.length; i++){
 			console.log("\nPen: "+this.pens[i].type+"\n");
 			for (var j = 0; j < this.pens[i].animals.length; j++){
 		console.log(this.pens[i].animals[j].name, "the", this.pens[i].animals[j].species);
 			}
 		}
+		console.log("------------------------------\n");
 		
 	},
 
@@ -189,10 +190,11 @@ var Pen = function(type, animals){
 	
 
 	this.displayPen = function(){
-		console.log("\nPen: "+this.type+"\n");
+		console.log("\n------------------------------\nPen: "+this.type+"\n");
 		for (var j = 0; j < this.animals.length; j++){
 			console.log(this.animals[j].name, "the", this.animals[j].species);
 		}
+		console.log("------------------------------\n");
 	}
 }
 
@@ -210,8 +212,5 @@ Zoo.pens.push(tempPen);
 var lionPen = new Pen("Lion's Den",[lion1, lion2, lion3]);
 Zoo.pens.push(lionPen);
 
-// var zoo = new Zoo();
-
-console.log(lionPen);
 
 Zoo.startMenu();
