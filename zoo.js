@@ -152,11 +152,14 @@ var Zoo = {
 		}
 		console.log("Choose the animal to be relocated: ");
 		var choice = this.handleInput(this.pens[pen].animals.length);
+		// converting the number that was entered into the actual index number so it works properly with the 
+		// program
+		var animalIndex = choice - 1;
+		
+		console.log("Choose the pen you would like to move "+this.pens[pen].animals[animalIndex].name+" to.");
 
-		console.log("Choose the pen you would like to move "+this.pens[pen].animals[choice].name+" to.");
-
-		this.choosePen('add2', this.pens[pen].animals[choice]);
-		this.pens[pen].animals.splice(choice,1);
+		this.choosePen('add2', this.pens[pen].animals[animalIndex]);
+		this.pens[pen].animals.splice(animalIndex,1);
 		console.log ("The animal has been moved.");
 
 	}
