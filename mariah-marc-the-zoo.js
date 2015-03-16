@@ -1,5 +1,4 @@
 
-//2) Set up new Pens
 //3) Remove Pens
 //4) Add an Animal to a Pen
 //5) Remove Animals from pens (might be cool as a 2.0 feature to have this feature be add/remove and you type the animal... if it exists then delete it -maybe with a confirm- and if it doesn't exist, create it
@@ -15,12 +14,12 @@ function getUserInput(message){
 	return sget(message).trim().toLowerCase();
 }
 
-function Animal(species, animalSize, gender, pen){
+function Animal(species, animalSize, gender, pen, myId){
 	this.species = species;
 	this.animalSize = animalSize;
 	this.gender = gender;
 	this.myPen = pen;
-	this.myId = //DLZoo.animals[];
+	this.myId;
 	
 	// this.findMyId = function(){
 	// 	for(var i = 0; i < DLZoo.animals.length; i++);
@@ -33,9 +32,9 @@ function Animal(species, animalSize, gender, pen){
 }
 
 // Create a pen
-function Pen(penNumber, penName, occupants){
-	this.penNumber = //my place in this array;
+function Pen(penName, penNumber, occupants){
 	this.penName = penName;
+	this.penNumber;
 	this.occupants = [];
 	// this.displayMyOccupants = function(){
 	// 	console.log("These are the animals in " + this.penName + " : " + this.occupants)
@@ -54,8 +53,8 @@ function Zoo(){
 	this.createAnimal = function (species, animalSize, gender){
 		console.log("Adding new animal...\n");
 		this.animals.push(new Animal(species, animalSize, gender));
-		this.animals[this.animals.length - 1].myID = this.animals.length - 1;
-		console.log("Animal # " + this.animals[this.animals.length-1].myId + "is a " + this.animals[this.animals.length-1].species + ", is a " + this.animals[this.animals.length-1].animalSize + " size, and is a " + this.animals[this.animals.length-1].gender);
+		this.animals[this.animals.length - 1].myId = this.animals.length;
+		console.log("Animal # " + this.animals[this.animals.length-1].myId + " is a " + this.animals[this.animals.length-1].species + ", is a " + this.animals[this.animals.length-1].animalSize + " size, and is a " + this.animals[this.animals.length-1].gender);
 		zooMenu();
 	};  
 	
@@ -64,7 +63,8 @@ function Zoo(){
 	this.addPen = function (penName){
 		console.log("\nAdding new pen...\n");
 		this.pens.push(new Pen(penName));
-		console.log("Adding pen number: " + this.pens.penNumber + " named: " +  this.pens.penName);
+		this.pens[this.pens.length - 1].penNumber = this.pens.length;
+		console.log("Adding pen number: " + this.pens[this.pens.length - 1].penNumber + " named: " +  this.pens[this.pens.length - 1].penName);
 		zooMenu();
 	};
 
@@ -89,9 +89,9 @@ function Zoo(){
 		zooMenu();
 	};
 
-	this.displayAnimalsInZoo = function(){
+	this.displayAnimalsInZoo = function(zooAnimals, zooPens){
 		console.log("\n------------------------------\nThese are the animals in the Zoo:")
-		
+		console.log(zooPens.occupants); // undefined??
 		if (this.pens.occupants.length > 0){
 			for (var i = 0; i < this.pens.occupants.length; i++){
 				if (this.pens[i].occupants.length > 0){
@@ -137,11 +137,11 @@ function zooMenu(){
 			break;
 
 		case "7":
-			DLZoo.displayAnimalsInPen();
+			DLZoo.displayAnimalsInPen(getUserInput("\nPlease enter the number of the pen you would like"));
 			break;
 
 		case "8":
-			DLZoo.displayAnimalsInZoo();
+			DLZoo.displayAnimalsInZoo(DLZoo.animals, DLZoo.pens);
 			break;
 
 		case "9":
