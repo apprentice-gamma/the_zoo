@@ -4,22 +4,28 @@ function Zoo() {
   // this.animals = [];
   this.pens = [];
 
-  this.addAnimal = function(animal) {
-    this.animals.push(animal);
-  };
+  // this.addAnimal = function(animal) {
+  //   this.animals.push(animal);
+  // };
 
   this.addPen = function(pen) {
     this.pens.push(pen);
   };
 
   this.listPens = function() {
-    for (var i = 0; i < this.pens.length; i++) {
+    // Starting loop at 1 to skip 'Free Range' pen.
+    for (var i = 1; i < this.pens.length; i++) {
       console.log(this.pens[i].name);
     }
   };
 
   this.removePen = function(pen) {
-    this.pens.splice(this.pens.indexOf(pen), 1);
+    if (pen.name !== "Free Range") {
+      this.pens[0].push(pens.animals);  // Moves animals over to Free Range Pen
+      this.pens.splice(this.pens.indexOf(pen), 1);
+    } else {
+      console.log("Nice try. Free Range cannot be removed.");
+    }
   };
 
   this.findPenByName = function(penName) {
@@ -30,19 +36,13 @@ function Zoo() {
     }
   };
 
-  this.findAnimalByName = function(animalName) {
-    for (var i = 0, len = this.animals.length; i < len; i++) {
-      if (this.animals[i].name === animalName) {
-        return this.animals[i];
-      }
-    }
-  };
 
-  this.showAllAnimals = function() {
-    this.animals.forEach(function(animal) {
-      console.log("Name: " + animal.name + "\tSpecies: " + animal.species + "\tSize: " + animal.size + "\tGender: " + animal.gender + "\tLocation: " + animal.location + "\n");
-    });
-  };
+
+  // this.showAllAnimals = function() {
+  //   this.animals.forEach(function(animal) {
+  //     console.log("Name: " + animal.name + "\tSpecies: " + animal.species + "\tSize: " + animal.size + "\tGender: " + animal.gender + "\tLocation: " + animal.location + "\n");
+  //   });
+  // };
 }
 
 function Pen(name) {
@@ -52,18 +52,16 @@ function Pen(name) {
 
 
 
-Pen.prototype.displayAnimals = function() {
+Pen.prototype.listAnimals = function() {
   this.animals.forEach(function(animal) {
-    console.log("Name: " + animal.name + "\tSpecies: " + animal.species + "\tSize: " + animal.size + "\tGender: " + animal.gender + "\tLocation: " + animal.location + "\n");
+    console.log("Name: " + animal.name + "\tSpecies: " + animal.species + "\tSize: " + animal.size + "\tGender: " + animal.gender + "\n");
   });
 };
 
-Pen.prototype.removeAnimal = function(animalName) {
+Pen.prototype.removeAnimal = function(animal) {
   for (var i = 0, len = this.animals.length; i < len; i++) {
-    if (this.animals[i].name === animalName) {
+    if (this.animals[i].name === animal.name) {
       this.animals.splice(i, 1);
-    } else {
-      console.log("That animal isn't in this pen.");
     }
   }
 };
@@ -71,6 +69,16 @@ Pen.prototype.removeAnimal = function(animalName) {
 Pen.prototype.addAnimal = function(animal) {
   this.animals.push(animal);
 };
+
+Pen.prototype.findAnimalByName = function(animalName) {
+  for (var i = 0, len = this.animals.length; i < len; i++) {
+    if (this.animals[i].name === animalName) {
+      return this.animals[i];
+    }
+  }
+};
+
+
 
 function Animal(name, species, size, gender) {
   this.name = name;
@@ -84,19 +92,23 @@ function getInput(userPrompt) {
 }
 
 var zoo = new Zoo();
-var dog = new Animal("spuds", "dog", "small", "male");
-zoo.addAnimal(new Animal("mike", "horse", "large", "female"));
-zoo.addAnimal(new Animal("morris", "cat", "large", "male"));
-zoo.addAnimal(new Animal("bessie", "cow", "medium", "male"));
-zoo.addAnimal(new Animal("jeffrey", "giraffe", "large", "female"));
-zoo.addAnimal(dog);
+var freeRange = new Pen("Free Range");
+zoo.addPen(freeRange);
+
+
+// var dog = new Animal("spuds", "dog", "small", "male");
+freeRange.addAnimal(new Animal("henrietta", "horse", "large", "female"));
+freeRange.addAnimal(new Animal("morris", "cat", "large", "male"));
+// zoo.addAnimal(new Animal("bessie", "cow", "medium", "male"));
+// zoo.addAnimal(new Animal("jeffrey", "giraffe", "large", "female"));
+// zoo.addAnimal(dog);
 var dogPound = new Pen("Dog pound");
-var butterflyHouse = new Pen("Butterfly House");
+var monkeyHouse = new Pen("Monkey House");
 zoo.addPen(dogPound);
-zoo.addPen(butterflyHouse);
+zoo.addPen(monkeyHouse);
 // console.log(zoo.pens);
 // zoo.listPens();
-zoo.showAllAnimals();
+// zoo.showAllAnimals();
 
 // console.log("Dogpound pre-addition: " + dogPound.animals.length);
 // console.log("Zoo animals array pre " + zoo.animals.length);
@@ -104,10 +116,10 @@ zoo.showAllAnimals();
 // console.log("Dogpound post-addition: " + dogPound.animals.length);
 // console.log("Zoo animals array post " + zoo.animals.length);
 
-zoo.findPenByName("Dog pound").displayAnimals();
-console.log("NEW");
-zoo.findPenByName("Dog pound").removeAnimal("spuds");
-zoo.findPenByName("Dog pound").displayAnimals();
+// zoo.findPenByName("Dog pound").listAnimals();
+// console.log("NEW");
+// zoo.findPenByName("Dog pound").removeAnimal("spuds");
+// zoo.findPenByName("Dog pound").listAnimals();
 // var bessie = zoo.findAnimalByName("bessie");
 // console.log(bessie.name);
 // console.log(bessie.gender);
@@ -133,32 +145,53 @@ while (zooKeeping) {
 	var userInput = getInput();
 
 	switch (userInput) {
-	  case '1':
-	    zoo.addAnimal(new Animal(getInput("Enter animal's name:"), getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
+	  case '1': // Add an animal
+	    // zoo.addAnimal(new Animal(getInput("Enter animal's name:"), getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
+      freeRange.addAnimal(new Animal(getInput("Enter animal's name:"), getInput("Enter species:"), getInput("Enter size:"), getInput("Enter gender:")));
+      // console.log(zoo.pens[0]);
 	    break;
-	  case '2':
+	  case '2': // Build an animal pen
 	    zoo.addPen(new Pen(getInput("Enter name of pen:")));
+      // console.log(zoo.pens);
 	    break;
-	  case '3':
+	  case '3': // Remove a pen
 	  	zoo.listPens();
       var pen = zoo.findPenByName(getInput("Type the name of the pen you would like to remove:"));
 	  	zoo.removePen(pen);
+      // console.log(zoo.pens);
 	  	break;
-	  case '4':
-      zoo.showAllAnimals();
-      var animal = zoo.findAnimalByName(getInput("Which animal would you like to move?"));
+	  case '4': // Add an animal to a pen
+      // zoo.showAllAnimals();
+      freeRange.listAnimals();
+      var animal = freeRange.findAnimalByName(getInput("Which animal would you like to move?"));
       zoo.listPens();
       pen = zoo.findPenByName(getInput("Which pen would you like to move " + animal.name + " to?"));
       pen.addAnimal(animal);
-      console.log(pen.animals)
+      freeRange.removeAnimal(animal);
+      // console.log("Pens animals array " + pen.animals);
+      // console.log("Free Range animals array " + freeRange.animals);
 		  break;
-	  case '5':
+	  case '5': // Remove an animal from a pen.
+      zoo.listPens();
+      pen = zoo.findPenByName(getInput("Select pen:"));
+      pen.listAnimals();
+      var animal = pen.findAnimalByName(getInput("Which animal would you like to remove?"));
+      freeRange.addAnimal(animal);
+      pen.removeAnimal(animal);
+      console.log("Pens animals array " + pen.animals.length);
+      console.log("Free Range animals array " + freeRange.animals.length);
 	    break;
-	  case '6':
+	  case '6': // View all the animals in a pen.
+      zoo.listPens();
+      var pen = zoo.findPenByName(getInput("Select pen to view its animals."));
+      pen.listAnimals();
 	    break;
-	  case '7':
+	  case '7': // View all the animals in the zoo.
+      zoo.pens.forEach(function(pen) {
+        pen.listAnimals();
+      });
 	    break;
-	  case '8':
+	  case '8': // Quit
 	  	console.log("Thank you for visiting the zoo.  Please come again.");
 	  	zooKeeping = false;
 	    break;
