@@ -3,7 +3,7 @@
 //4) Add an Animal to a Pen
 //5) Remove Animals from pens (might be cool as a 2.0 feature to have this feature be add/remove and you type the animal... if it exists then delete it -maybe with a confirm- and if it doesn't exist, create it
 //6) Display all the Animals in a Pen
-//7) Display all the Animals in the Zoo
+
 
 //SET UP PROTOTYPE OBJECTS
 
@@ -27,7 +27,7 @@ function Animal(species, animalSize, gender, pen, myId){
 	// };
 
 	this.displayMyself = function(){
-		console.log(this.species +" : "+ this.animalSize +" : "+ this.gender +" : "+ this.Pen );
+		console.log("Animal # " + this.myId +" is a: "+ this.species +". It's gender is "+ this.gender +" and it's size is "+ this.animalSize + ".");
 	};
 }
 
@@ -58,7 +58,23 @@ function Zoo(){
 		zooMenu();
 	};  
 	
-	this.removeAnimal = function (){};
+	this.removeAnimal = function (animalID){
+		animalID = parseInt(animalID);
+		console.log(typeof animalID);
+		if (animalID === this.animals[animalID - 1].myId){
+			this.animals.splice([animalID - 1], 1);
+			DLZoo.displayAnimalsInZoo();
+		} else (
+			console.log("JK NOT WORKING!!!"));
+		zooMenu();
+
+	};
+
+	this.reassignAnimalID = function(){
+		for (var i = 0; i < this.animals.length; i++){
+			this.animal
+		}
+	};
 	
 	this.addPen = function (penName){
 		console.log("\nAdding new pen...\n");
@@ -75,7 +91,6 @@ function Zoo(){
 
 	this.addAnimalToPen = function(penNumber, myId){
 		console.log("I do nothing yet!");
-
 		zooMenu();
 	};
 
@@ -89,21 +104,12 @@ function Zoo(){
 		zooMenu();
 	};
 
-	this.displayAnimalsInZoo = function(zooAnimals, zooPens){
-		console.log("\n------------------------------\nThese are the animals in the Zoo:")
-		console.log(zooPens.occupants); // undefined??
-		if (this.pens.occupants.length > 0){
-			for (var i = 0; i < this.pens.occupants.length; i++){
-				if (this.pens[i].occupants.length > 0){
-				console.log("\nPen: " + this.pens[i].penName + " has these animal(s) in it: " + this.pens[i].occupants);
-				} else {
-					console.log("Make sure to put your animals from their shipping cages into their pens!  Those animals must be really uncomfortable right now...");
-				}
-			} 
-		} else {
-			console.log("Make sure to put your animals from their shipping cages into their pens!  Those animals must be really uncomfortable right now...");
+	this.displayAnimalsInZoo = function(){
+		console.log("\n------------------------------\nThese are the animals in the Zoo:");
+		for (var i = 0; i < this.animals.length; i++){
+			console.log(this.animals[i].displayMyself());
+			//undefined keeps showing up after the display.  WHY!!!!
 		}
-		
 		zooMenu();
 	};
 }
@@ -117,7 +123,7 @@ function zooMenu(){
 			break;
 
 		case "2":
-			DLZoo.removeAnimal(getUserInput("\nWhich species are you looking for?"));
+			DLZoo.removeAnimal(getUserInput("\nPlease enter the number of the animal you are looking for: "));
 			break;
 
 		case "3":
@@ -137,11 +143,11 @@ function zooMenu(){
 			break;
 
 		case "7":
-			DLZoo.displayAnimalsInPen(getUserInput("\nPlease enter the number of the pen you would like"));
+			DLZoo.displayAnimalsInPen(getUserInput("\nPlease enter the number of the pen you would like to look at: "));
 			break;
 
 		case "8":
-			DLZoo.displayAnimalsInZoo(DLZoo.animals, DLZoo.pens);
+			DLZoo.displayAnimalsInZoo();
 			break;
 
 		case "9":
