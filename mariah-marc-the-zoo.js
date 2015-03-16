@@ -55,8 +55,8 @@ function Zoo(){
 	
 	this.removeAnimal = function (animalID){
 		animalID = parseInt(animalID);
-
-		if ((typeof animalID !== undefined) && (animalID <= this.animals.length - 1) && (animalID === this.animals[animalID - 1].myId)){
+                             
+		if ((typeof animalID !== undefined) && (animalID <= this.animals.length) && (animalID === this.animals[animalID - 1].myId)){
 			this.animals.splice([animalID - 1], 1);
 			DLZoo.reassignAnimalID();
 		} else (
@@ -85,7 +85,7 @@ function Zoo(){
 	this.removePen = function (penNumberInput){
 		penNumberInput = parseInt(penNumberInput);
 
-		if ((typeof penNumberInput !== undefined) && (penNumberInput <= this.pens.length - 1) && (penNumberInput === this.pens[penNumberInput - 1].penNumber)){
+		if ((typeof penNumberInput !== undefined) && (penNumberInput <= this.pens.length) && (penNumberInput === this.pens[penNumberInput - 1].penNumber)){
 			this.pens.splice([penNumberInput - 1], 1);
 			DLZoo.reassignPenNumber();
 		} else (
@@ -98,16 +98,21 @@ function Zoo(){
 		for (var i = 0; i < this.pens.length; i++){
 			this.pens[i].penNumber = i+1;
 		}
-		console.log("\nWell, there goes that pen and all the animals in it.\nBetter hope that PETA doesn't care...\n\nHere are the pens that are left and their new numbers\n");
+		console.log("\nWell, there goes that pen.\nYou'd better put those animals in a new pen before PETA finds out...\n\nHere are the pens that are left and their new numbers\n");
 		for (var i = 0; i < this.pens.length; i++){
-			console.log(this.pens[i].displayMyOccupants());
+			console.log(this.pens[i].displayMyOccupants()); //when an animal is in the pen, it displays [object Object]
 		}
 		zooMenu();
 
 	};
 
-	this.addAnimalToPen = function(penNumber, myId){
-		console.log("I do nothing yet!");
+	this.addAnimalToPen = function(penNumberInput, myIdInput){
+		//there is no error control here yet
+		penNumberInput = parseInt(penNumberInput);
+		myIdInput = parseInt(myIdInput);
+
+		this.pens[penNumberInput - 1].occupants.push(this.animals[myIdInput-1]);
+
 		zooMenu();
 	};
 
@@ -118,8 +123,9 @@ function Zoo(){
 
 	this.displayAnimalsInPen = function(chosenPenNumber){
 		chosenPenNumber = parseInt(chosenPenNumber);
-		if ((typeof chosenPenNumber !== undefined) && (chosenPenNumber <= this.pens.length - 1) && (chosenPenNumber === this.pens[chosenPenNumber - 1].penNumber)){
-			console.log(this.pens[chosenPenNumber].displayMyOccupants());
+		console.log("chosenpennumber is " + chosenPenNumber + typeof chosenPenNumber);
+		if ((typeof chosenPenNumber !== undefined) && (chosenPenNumber <= this.pens.length) && (chosenPenNumber === this.pens[chosenPenNumber - 1].penNumber)){
+			console.log(this.pens[chosenPenNumber-1].displayMyOccupants());
 			zooMenu();
 		}
 		console.log("\nPlease make sure to enter a valid number!  Check out all the pens at the zoo again if you need to know the numbers...\n");
@@ -157,7 +163,7 @@ function zooMenu(){
 			break;
 
 		case "5":
-			DLZoo.addAnimalToPen();
+			DLZoo.addAnimalToPen(getUserInput("\nPlease enter the number of the pen you would like to add to: "), getUserInput("\nPlease enter the number of the animal you would like to add to the pen: "));
 			break;
 
 		case "6":
