@@ -1,16 +1,16 @@
 Welcome to the Zoo
 
-You should have a Zoo and the Zoo should have a collection of Pens for Animals to go in. 
+You should have a Zoo and the Zoo should have a collection of Pens for Animals to go in.
 
 Create an interactive program which allows the user (the Zookeeper!) to:
 
 1.) Create new Animals (animals should have a "species," "size," and "gender")
-1.) Set up new Pens
-2.) Remove Pens
-3.) Add an Animal to a Pen
-4.) Remove Animals from pens
-5.) Display all the Animals in a Pen
-6.) Display all the Animals in the Zoo
+2.) Set up new Pens
+3.) Remove Pens
+4.) Add an Animal to a Pen
+5.) Remove Animals from pens
+6.) Display all the Animals in a Pen
+7.) Display all the Animals in the Zoo
 
 Bonus (choose any or all)
 a. Your program should also allow the Zookeeper to add BabyAnimals to Pens. BabyAnimal should utilize Animal as a Prototype.
