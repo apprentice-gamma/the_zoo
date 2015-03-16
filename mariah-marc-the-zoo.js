@@ -16,11 +16,17 @@ function getUserInput(message){
 	return sget(message).trim().toLowerCase();
 }
 
-function Animal(species, size, gender){
+function Animal(species, size, gender, pen){
 	this.species = species;
-	this.size = size;
+	this.animalSize = size;
 	this.gender = gender;
+	this.myPen = pen;
+	this.myId = //my place in this array;
+	this.displayMyself = function(){
+		console.log(this.species +" : "+ this.animalSize +" : "+ this.gender +" : "+ this.Pen );
+	};
 }
+
 // Create a pen
 function Pen(){
 	this.habitat = habitat;
@@ -29,17 +35,21 @@ function Pen(){
 	this.momAndDad = momAndDad;
 	this.occupant = occupant;
 }
+
+// ! ! ! to re-set an animal's id after a deletion, wrtite a function that goes over the animals array and re-sets every animal's id. 
+
 // create a Zoo object with methods
 function Zoo(){
 	
 	this.animals = [];
 	
 	this.pens = [];
-
+ 
 	this.createAnimal = function (species, size, gender){
-		console.log("\nAdding new animal...\n");
-		this.animals.push(new Pen(species, size, gender));
-		console.log(this.animals[this.animals.length-1]);
+		console.log("Adding new animal...");
+		this.animals.push(new Animal(species, size, gender));
+		this.animals[this.animals.length - 1].myID = this.animals.length - 1;
+		console.log(this.animals[this.animals.length-1].species);
 		zooMenu();
 	};  
 	
@@ -88,7 +98,7 @@ function zooMenu(){
 			break;
 
 		case "2":
-			DLZoo.removeAnimal(getUserInput();
+			DLZoo.removeAnimal(getUserInput("Which species are you looking for?"));
 			break;
 
 		case "3":
