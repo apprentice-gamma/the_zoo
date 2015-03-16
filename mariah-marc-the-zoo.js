@@ -1,11 +1,9 @@
 
-//3) Remove Pens
 //4) Add an Animal to a Pen
 //5) Remove Animals from pens (might be cool as a 2.0 feature to have this feature be add/remove and you type the animal... if it exists then delete it -maybe with a confirm- and if it doesn't exist, create it
-//6) Display all the Animals in a Pen
 
 
-//SET UP PROTOTYPE OBJECTS
+
 
 
 var sget = require("sget");
@@ -21,24 +19,21 @@ function Animal(species, animalSize, gender, pen, myId){
 	this.myPen = pen;
 	this.myId;
 	
-	// this.findMyId = function(){
-	// 	for(var i = 0; i < DLZoo.animals.length; i++);
-	// 	if (DL)
-	// };
-
 	this.displayMyself = function(){
 		console.log("Animal # " + this.myId +" is a: "+ this.species +". It's gender is "+ this.gender +" and it's size is "+ this.animalSize + ".");
 	};
 }
 
-// Create a pen
+
 function Pen(penName, penNumber, occupants){
 	this.penName = penName;
 	this.penNumber;
 	this.occupants = [];
-	// this.displayMyOccupants = function(){
-	// 	console.log("These are the animals in " + this.penName + " : " + this.occupants)
-	// }
+
+
+	this.displayMyOccupants = function(){
+	console.log("These are the animals in Pen# " + this.penNumber+ " named " + this.penName + " : " + this.occupants);
+	}
 }
 
 // ! ! ! to re-set an animal's id after a deletion, wrtite a function that goes over the animals array and re-sets every animal's id. 
@@ -60,20 +55,23 @@ function Zoo(){
 	
 	this.removeAnimal = function (animalID){
 		animalID = parseInt(animalID);
-		console.log(typeof animalID);
-		if (animalID === this.animals[animalID - 1].myId){
+
+		if ((typeof animalID !== undefined) && (animalID <= this.animals.length - 1) && (animalID === this.animals[animalID - 1].myId)){
 			this.animals.splice([animalID - 1], 1);
-			DLZoo.displayAnimalsInZoo();
+			DLZoo.reassignAnimalID();
 		} else (
-			console.log("JK NOT WORKING!!!"));
-		zooMenu();
+			console.log("\nPlease make sure to enter a valid number!  Check out all the animals at the zoo again if you need to know the numbers...\n"));
+			zooMenu();
 
 	};
 
 	this.reassignAnimalID = function(){
 		for (var i = 0; i < this.animals.length; i++){
-			this.animal
+			this.animals[i].myId = i+1;
 		}
+		console.log("\nWell, I guess people didn't like that animal anyway.\nPlease standby while the new animals numbers are created...\n");
+		DLZoo.displayAnimalsInZoo();
+
 	};
 	
 	this.addPen = function (penName){
@@ -84,9 +82,28 @@ function Zoo(){
 		zooMenu();
 	};
 
-	this.removePen = function (){
-		console.log("I do nothing yet!");
+	this.removePen = function (penNumberInput){
+		penNumberInput = parseInt(penNumberInput);
+
+		if ((typeof penNumberInput !== undefined) && (penNumberInput <= this.pens.length - 1) && (penNumberInput === this.pens[penNumberInput - 1].penNumber)){
+			this.pens.splice([penNumberInput - 1], 1);
+			DLZoo.reassignPenNumber();
+		} else (
+			console.log("\nPlease make sure to enter a valid number!  Check out all the pens at the zoo again if you need to know the numbers...\n"));
+			zooMenu();
+
+	};
+
+	this.reassignPenNumber = function(){
+		for (var i = 0; i < this.pens.length; i++){
+			this.pens[i].penNumber = i+1;
+		}
+		console.log("\nWell, there goes that pen and all the animals in it.\nBetter hope that PETA doesn't care...\n\nHere are the pens that are left and their new numbers\n");
+		for (var i = 0; i < this.pens.length; i++){
+			console.log(this.pens[i].displayMyOccupants());
+		}
 		zooMenu();
+
 	};
 
 	this.addAnimalToPen = function(penNumber, myId){
@@ -99,8 +116,13 @@ function Zoo(){
 		zooMenu();
 	};
 
-	this.displayAnimalsInPen = function(){
-		console.log("I do nothing yet!");
+	this.displayAnimalsInPen = function(chosenPenNumber){
+		chosenPenNumber = parseInt(chosenPenNumber);
+		if ((typeof chosenPenNumber !== undefined) && (chosenPenNumber <= this.pens.length - 1) && (chosenPenNumber === this.pens[chosenPenNumber - 1].penNumber)){
+			console.log(this.pens[chosenPenNumber].displayMyOccupants());
+			zooMenu();
+		}
+		console.log("\nPlease make sure to enter a valid number!  Check out all the pens at the zoo again if you need to know the numbers...\n");
 		zooMenu();
 	};
 
@@ -110,7 +132,7 @@ function Zoo(){
 			console.log(this.animals[i].displayMyself());
 			//undefined keeps showing up after the display.  WHY!!!!
 		}
-		zooMenu();
+	zooMenu();
 	};
 }
 
@@ -131,7 +153,7 @@ function zooMenu(){
 			break;
 
 		case "4":
-			DLZoo.removePen();
+			DLZoo.removePen(getUserInput("\nPlease enter the number of the pen you would like remove: "));
 			break;
 
 		case "5":
